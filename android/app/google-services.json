@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "710920996330",
+    "project_id": "swiftpay-54275",
+    "storage_bucket": "swiftpay-54275.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710920996330:android:d6a5751054f1a26f501e93",
+        "android_client_info": {
+          "package_name": "com.example.swiftpay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710920996330-bntfrd31otfsh30fv4m26pj5d9n44dlm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyS8EnBSBYTJj2_SMPclvouMrTACW2H9A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710920996330-bntfrd31otfsh30fv4m26pj5d9n44dlm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "710920996330-stc755rdbaj38m6l3740pm1ijjk7qimf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.swiftpay"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
