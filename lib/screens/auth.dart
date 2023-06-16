@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:swiftpay/screens/dashboard.dart';
+
+final _firebase = FirebaseAuth.instance;
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -10,13 +15,13 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   final _form = GlobalKey<FormState>();
 
-  var _isLogin = true;
+  var _isLogin = false;
   var _enteredFirstname = '';
   var _enteredLastname = '';
   var _enteredEmail = '';
   var _enteredPassword = '';
 
-  void _submit() {
+  void _submit() async {
     final _isValid = _form.currentState!.validate();
     
 
@@ -25,10 +30,27 @@ class _AuthScreenState extends State<AuthScreen> {
     }
 
     _form.currentState!.save();
+    // print(_enteredEmail);
+    // print(_enteredPassword);
 
-    if (_isLogin) {
-      // Log Users in
-    } else {}
+    try {
+      if (!_isLogin) {
+        // Login an Existing User...
+       final userCredentials = await _firebase.signInWithEmailAndPassword(email: _enteredEmail, password: _enteredPassword);
+      }else {
+        // Create New User...
+       final userCredentials = await _firebase.createUserWithEmailAndPassword(email: _enteredEmail, password: _enteredPassword);
+
+      }
+
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const DashboardScreen(),));
+      
+    } on FirebaseAuthException catch (error) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.message ?? 'Authentication Failed')));
+    }
+
+    
   }
 
   @override
@@ -200,6 +222,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             value.length < 6) {
                           return 'Please input a valid password.';
                         }
+                        return null;
                       },
                       onSaved: (value) {
                         _enteredPassword = value!;

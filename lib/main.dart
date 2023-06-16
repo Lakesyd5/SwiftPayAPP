@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swiftpay/screens/welcome_screen.dart';
+import 'package:swiftpay/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
             seedColor: const Color.fromARGB(255, 137, 1, 62)),
       ),
-      home: const WelcomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }
