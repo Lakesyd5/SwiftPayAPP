@@ -27,7 +27,8 @@ class IntroScreenOne extends StatelessWidget {
                 children: [
                   Text(
                     'Make Payments without extra charges and zero stress',
-                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      fontWeight: FontWeight.w500,
                           color: Theme.of(context).colorScheme.onBackground,
                         ),
                   ),

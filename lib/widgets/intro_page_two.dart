@@ -22,13 +22,13 @@ class IntroScreenTWo extends StatelessWidget {
               children: [
                 Text(
                   'Speedy transactions with no issues guaranteed',
-                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w500,
                       color: Theme.of(context).colorScheme.onBackground),
-                      textWidthBasis: TextWidthBasis.parent,
+                      // textWidthBasis: TextWidthBasis.parent,
                 ),
                 const SizedBox(height: 9),
                 Text(
-                  'I\'ts in the name. Trust your transactions are processed quickly without frustrating errors.',
+                  'It\'s in the name. Trust your transactions are processed quickly without frustrating errors.',
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       color: Theme.of(context).colorScheme.onBackground),
                 ),

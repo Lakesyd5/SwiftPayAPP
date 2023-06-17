@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:swiftpay/screens/account_splash.dart';
 
 import 'package:swiftpay/screens/dashboard.dart';
 
@@ -37,13 +38,13 @@ class _AuthScreenState extends State<AuthScreen> {
       if (!_isLogin) {
         // Login an Existing User...
        final userCredentials = await _firebase.signInWithEmailAndPassword(email: _enteredEmail, password: _enteredPassword);
+       Navigator.push(context, MaterialPageRoute(builder: (context) => const DashboardScreen(),));
       }else {
         // Create New User...
        final userCredentials = await _firebase.createUserWithEmailAndPassword(email: _enteredEmail, password: _enteredPassword);
-
+       Navigator.push(context, MaterialPageRoute(builder: (context) =>  AccountGenerateScreen(),));
       }
 
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const DashboardScreen(),));
       
     } on FirebaseAuthException catch (error) {
       ScaffoldMessenger.of(context).clearSnackBars();
