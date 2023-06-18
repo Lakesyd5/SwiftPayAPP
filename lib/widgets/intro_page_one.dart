@@ -49,7 +49,7 @@ class IntroScreenOne extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      minimumSize: Size(double.infinity, 60)
+                      minimumSize: const Size(double.infinity, 60)
                     ),
                     child: Text(
                       'Next',

@@ -10,7 +10,6 @@ class SplashScreen extends StatefulWidget {
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
-  
 }
 
 class _SplashScreenState extends State<SplashScreen> {
@@ -22,8 +21,25 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _startTimer() {
-    Timer(const Duration(seconds: 2), () { 
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx) => OnboardingScreen()));
+    Timer(const Duration(seconds: 2), () {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (ctx) => StreamBuilder<User?>(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot) {
+                // user is logged in
+                if (snapshot.hasData) {
+                  return const DashboardScreen();
+                }
+
+                // user is NOT logged in
+                else {
+                  return const OnboardingScreen();
+                }
+              },
+            ),
+          ));
     });
   }
 
@@ -41,7 +57,8 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             const SizedBox(height: 10),
             Text(
-              'Speedy transactions, Zero Stress.', style: Theme.of(context)
+              'Speedy transactions, Zero Stress.',
+              style: Theme.of(context)
                   .textTheme
                   .titleMedium!
                   .copyWith(color: Theme.of(context).colorScheme.onBackground),
