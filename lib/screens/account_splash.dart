@@ -3,9 +3,16 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:swiftpay/screens/account_number_display.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+String userId = FirebaseAuth.instance.currentUser!.uid;
+final db = FirebaseFirestore.instance;
 
 class AccountGenerateScreen extends StatefulWidget {
-  const AccountGenerateScreen({super.key});
+  const AccountGenerateScreen({super.key, required this.data});
+
+  final data;
 
   @override
   State<AccountGenerateScreen> createState() => _AccountGenerateScreenState();
@@ -19,7 +26,7 @@ class _AccountGenerateScreenState extends State<AccountGenerateScreen> {
   void initState() {
     _startTimer();
     accountNumber = _generateAccountNumber();
-    print(accountNumber);
+    // print(accountNumber);
     super.initState();
   }
 
@@ -40,8 +47,18 @@ class _AccountGenerateScreenState extends State<AccountGenerateScreen> {
       }
     }
 
+    final data = {"Account Number": accountNumber};
+
+    db.collection("users").doc(userId).set(data, SetOptions(merge: true));
+
+
     return accountNumber;
+
   }
+
+  
+
+  
   
 
 

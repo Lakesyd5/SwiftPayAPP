@@ -1,4 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+final userId = FirebaseAuth.instance.currentUser!.uid;
+final db = FirebaseFirestore.instance;
 
 class SetPinScreen extends StatefulWidget {
   const SetPinScreen({super.key});
@@ -9,6 +14,23 @@ class SetPinScreen extends StatefulWidget {
 
 class _SetPinScreenState extends State<SetPinScreen> {
   final _formKey = GlobalKey<FormState>();
+  var _userPin = '';
+
+  void _submit () {
+    final _isValid = _formKey.currentState!.validate();
+
+    if (!_isValid) {
+      return;
+    }
+
+    _formKey.currentState!.save();
+
+    final data = {'Pin' : _userPin};
+    db.collection('users').doc(userId).set(data, SetOptions(merge: true));
+
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,21 +56,25 @@ class _SetPinScreenState extends State<SetPinScreen> {
               keyboardType: TextInputType.number,
               obscureText: true,
               validator: (value) {
-                if (value == null || value.trim().isEmpty || value.length < 4 || value.length > 4 || value.characters == String) {
+                if (value == null || value.trim().isEmpty || value.length < 4 || value.length > 4 ) {
                   return 'Please input a valid transaction PIN.';
                 }
+                return null;
+              },
+              onSaved: (value) {
+                _userPin = value!;
               },
             )),
             const SizedBox(height: 110),
             ElevatedButton(
-                onPressed: () {},
+                onPressed: _submit,
                 style: ElevatedButton.styleFrom(
                   backgroundColor:
                       Theme.of(context).colorScheme.primaryContainer,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                     minimumSize: const Size(double.infinity, 43)
                 ),
-                child: Text('Set Transaction Pin', style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Theme.of(context).colorScheme.onBackground),))
+                child: Text('Set Transaction Pin', style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Theme.of(context).colorScheme.onBackground),)),
           ],
         ),
       ),

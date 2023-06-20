@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:swiftpay/screens/account_splash.dart';
@@ -5,6 +6,7 @@ import 'package:swiftpay/screens/account_splash.dart';
 import 'package:swiftpay/screens/dashboard.dart';
 
 final _firebase = FirebaseAuth.instance;
+final db = FirebaseFirestore.instance;
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -31,18 +33,25 @@ class _AuthScreenState extends State<AuthScreen> {
     }
 
     _form.currentState!.save();
-    // print(_enteredEmail);
-    // print(_enteredPassword);
 
     try {
       if (!_isLogin) {
         // Login an Existing User...
        final userCredentials = await _firebase.signInWithEmailAndPassword(email: _enteredEmail, password: _enteredPassword);
-       Navigator.push(context, MaterialPageRoute(builder: (context) => const DashboardScreen(),));
+       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const DashboardScreen(),));
       }else {
         // Create New User...
        final userCredentials = await _firebase.createUserWithEmailAndPassword(email: _enteredEmail, password: _enteredPassword);
-       Navigator.push(context, MaterialPageRoute(builder: (context) =>  AccountGenerateScreen(),));
+
+       final userData = {
+        'Firstname' : _enteredFirstname,
+        'Lastname' : _enteredLastname,
+        'email' : _enteredEmail,
+       };
+
+       db.collection('users').doc(userCredentials.user!.uid).set(userData);
+       Navigator.push(context, MaterialPageRoute(builder: (context) =>  AccountGenerateScreen(data: userData),));
+
       }
 
       
