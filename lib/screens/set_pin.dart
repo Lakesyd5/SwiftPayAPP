@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:swiftpay/screens/dashboard.dart';
 
 final userId = FirebaseAuth.instance.currentUser!.uid;
 final db = FirebaseFirestore.instance;
@@ -25,8 +26,11 @@ class _SetPinScreenState extends State<SetPinScreen> {
 
     _formKey.currentState!.save();
 
+    // saves the user pin to the database
     final data = {'Pin' : _userPin};
     db.collection('users').doc(userId).set(data, SetOptions(merge: true));
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const DashboardScreen(),));
 
 
   }

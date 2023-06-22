@@ -23,6 +23,7 @@ class _AuthScreenState extends State<AuthScreen> {
   var _enteredLastname = '';
   var _enteredEmail = '';
   var _enteredPassword = '';
+  var _isAuthenticating = false;
 
   void _submit() async {
     final _isValid = _form.currentState!.validate();
@@ -35,6 +36,9 @@ class _AuthScreenState extends State<AuthScreen> {
     _form.currentState!.save();
 
     try {
+      setState(() {
+        _isAuthenticating = true;
+      });
       if (!_isLogin) {
         // Login an Existing User...
        final userCredentials = await _firebase.signInWithEmailAndPassword(email: _enteredEmail, password: _enteredPassword);
@@ -58,6 +62,10 @@ class _AuthScreenState extends State<AuthScreen> {
     } on FirebaseAuthException catch (error) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.message ?? 'Authentication Failed')));
+
+      setState(() {
+        _isAuthenticating = false;
+      });
     }
 
     
@@ -239,7 +247,10 @@ class _AuthScreenState extends State<AuthScreen> {
                       },
                     ),
                     const SizedBox(height: 40),
+                    if (_isAuthenticating)
+                    const CircularProgressIndicator(),
                     // Login Or Sign Up Button
+                    if(!_isAuthenticating)
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
@@ -262,6 +273,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                       .onBackground),
                         )),
                     // Have An Account Or Not
+                    if(!_isAuthenticating)
                     TextButton(
                         onPressed: () {
                           setState(() {

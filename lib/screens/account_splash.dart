@@ -47,8 +47,8 @@ class _AccountGenerateScreenState extends State<AccountGenerateScreen> {
       }
     }
 
+    // saves the users account number to the database
     final data = {"Account Number": accountNumber};
-
     db.collection("users").doc(userId).set(data, SetOptions(merge: true));
 
 

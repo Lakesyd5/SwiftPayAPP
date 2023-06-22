@@ -69,6 +69,15 @@ flutter:
     - assets/images/onboarding_screen_one.png
     - assets/images/onboarding_screen_two.png
     - assets/images/swiftpay.png
+    - assets/images/dashboard_card.png
+    - assets/images/betting_funds.png
+    - assets/images/dstv_payment.png
+    - assets/images/electricity.png
+    - assets/images/fast_food.png
+    - assets/images/internet_access.png
+    - assets/images/loan.png
+    - assets/images/netflix.png
+    - assets/images/transport.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
