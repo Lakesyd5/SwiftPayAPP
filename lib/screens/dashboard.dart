@@ -43,20 +43,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Scaffold(
         body: _pages[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
+          elevation: 150,
           currentIndex: _selectedIndex,
           onTap: _navigateBottomBar,
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Theme.of(context).colorScheme.primaryContainer,
+          backgroundColor: Theme.of(context).colorScheme.background,
+          unselectedItemColor: Colors.white,
           // backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.sync_alt_outlined),
-              label: 'Transfer',
-            ),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.sync_alt_outlined), label: 'Transfer'),
             BottomNavigationBarItem(icon: Icon(Icons.call), label: 'Airtime'),
             BottomNavigationBarItem(icon: Icon(Icons.savings), label: 'Savings'),
             BottomNavigationBarItem(icon: Icon(Icons.receipt_long_rounded), label: 'History')

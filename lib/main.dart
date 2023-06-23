@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:swiftpay/screens/splash_screen.dart';
 
 void main() async {
@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
             seedColor: const Color.fromARGB(255, 137, 1, 62)),
       ),
+      debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
     );
   }
