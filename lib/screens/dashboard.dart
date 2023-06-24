@@ -1,14 +1,12 @@
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:swiftpay/pages/finances.dart';
 
-import 'package:swiftpay/pages/airtime.dart';
 import 'package:swiftpay/pages/history.dart';
 import 'package:swiftpay/pages/home.dart';
+import 'package:swiftpay/pages/manage_account.dart';
 import 'package:swiftpay/pages/savings.dart';
-import 'package:swiftpay/pages/transfer.dart';
-// import 'package:swiftpay/screens/auth.dart';
-// import 'package:swiftpay/widgets/other_actions.dart';
-// import 'package:swiftpay/widgets/quick_actions.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -28,10 +26,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   final List<Widget> _pages = [
     const HomePage(),
-    const TransferPage(),
-    const AirtimePage(),
     const SavingsPage(),
-    const HistoryPage()
+    const HistoryPage(),
+    const FinancesPage(),
+    const ManageAccount()
   ];
 
   @override
@@ -47,16 +45,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
           currentIndex: _selectedIndex,
           onTap: _navigateBottomBar,
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: Theme.of(context).colorScheme.primaryContainer,
-          backgroundColor: Theme.of(context).colorScheme.background,
-          unselectedItemColor: Colors.white,
-          // backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          selectedItemColor: Colors.black,
+          selectedIconTheme: IconThemeData(color: Theme.of(context).colorScheme.primaryContainer),
+          unselectedItemColor: Color.fromARGB(193, 158, 158, 158),
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.sync_alt_outlined), label: 'Transfer'),
-            BottomNavigationBarItem(icon: Icon(Icons.call), label: 'Airtime'),
             BottomNavigationBarItem(icon: Icon(Icons.savings), label: 'Savings'),
-            BottomNavigationBarItem(icon: Icon(Icons.receipt_long_rounded), label: 'History')
+            BottomNavigationBarItem(icon: Icon(Icons.wallet), label: 'Finances'),
+            BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Me')
           ],
         ),
       ),
@@ -65,15 +61,3 @@ class _DashboardScreenState extends State<DashboardScreen> {
 }
 
 
-        // appBar: AppBar(
-        //   title: Text('Welcome'),
-        //   actions: [
-        //     IconButton(
-        //         onPressed: () {
-        //           FirebaseAuth.instance.signOut();
-        //           Navigator.of(context).pushReplacement(
-        //               MaterialPageRoute(builder: (context) => AuthScreen()));
-        //         },
-        //         icon: Icon(Icons.exit_to_app))
-        //   ],
-        // ),

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class OtherActions extends StatelessWidget {
@@ -5,185 +7,205 @@ class OtherActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white,
-      shadowColor: Colors.grey,
-      elevation: 6,
-      child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 30.0),
-          child: Wrap(
-            spacing: 9.0, // gap between adjacent chips
-            runSpacing: 30.0, // gap between lines
+    return Wrap(
+      spacing: 23.0, // gap between adjacent chips
+      runSpacing: 10.0, // gap between lines
+      // crossAxisAlignment: WrapCrossAlignment.center,
+      alignment: WrapAlignment.center,
+      children: [
+        // Internet Button
+        Container(
+          margin: EdgeInsets.all(10),
+          child: Column(
             children: [
+              // Icon
               Container(
-                padding: const EdgeInsets.all(5),
-                width: 78,
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.cente,
-                  children: [
-                    Image.asset(
-                      'assets/images/internet_access.png',
-                      width: 35,
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Internet Services',
-                      textAlign: TextAlign.center,
-                    )
-                  ],
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(132, 235, 232, 232),
+                    borderRadius: BorderRadius.circular(8)),
+                child: Icon(
+                  Icons.wifi,
+                  size: 30,
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.all(5),
-                width: 78,
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.cente,
-                  children: [
-                    Image.asset(
-                      'assets/images/betting_funds.png',
-                      width: 35,
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Betting Funds',
-                      textAlign: TextAlign.center,
-                    )
-                  ],
-                ),
+              SizedBox(
+                height: 12,
               ),
-              Container(
-                padding: const EdgeInsets.all(5),
-                width: 78,
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.cente,
-                  children: [
-                    Image.asset(
-                      'assets/images/loan.png',
-                      width: 35,
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Borrow Loan',
-                      textAlign: TextAlign.center,
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(5),
-                width: 90,
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.cente,
-                  children: [
-                    Image.asset(
-                      'assets/images/dstv_payment.png',
-                      width: 35,
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'DSTv Payment',
-                      textAlign: TextAlign.center,
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(5),
-                width: 78,
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.cente,
-                  children: [
-                    Image.asset(
-                      'assets/images/electricity.png',
-                      width: 35,
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Electricity Bills',
-                      textAlign: TextAlign.center,
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(5),
-                width: 78,
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.cente,
-                  children: [
-                    Image.asset(
-                      'assets/images/netflix.png',
-                      width: 35,
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Netflix Payment',
-                      textAlign: TextAlign.center,
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(5),
-                width: 78,
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.cente,
-                  children: [
-                    Image.asset(
-                      'assets/images/fast_food.png',
-                      width: 35,
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Fast Food',
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(5),
-                width: 90,
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.cente,
-                  children: [
-                    Image.asset(
-                      'assets/images/transport.png',
-                      width: 35,
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Commercial Transport',
-                      textAlign: TextAlign.center,
-                    )
-                  ],
-                ),
-              ),
+              Text('Internet')
             ],
-          )),
+          ),
+        ),
+
+        // Betting Button
+        Container(
+          margin: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              // Icon
+              Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(132, 235, 232, 232),
+                    borderRadius: BorderRadius.circular(8)),
+                child: Icon(
+                  Icons.sports_soccer_outlined,
+                  size: 30,
+                ),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Text('Betting')
+            ],
+          ),
+        ),
+        
+        // Fast Food Button
+        Container(
+          margin: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              // Icon
+              Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(132, 235, 232, 232),
+                    borderRadius: BorderRadius.circular(8)),
+                child: Icon(
+                  Icons.fastfood_outlined,
+                  size: 30,
+                ),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Text('Fast Food')
+            ],
+          ),
+        ),
+
+        // Tv Button
+        Container(
+          margin: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              // Icon
+              Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(132, 235, 232, 232),
+                    borderRadius: BorderRadius.circular(8)),
+                child: Icon(
+                  Icons.tv_rounded,
+                  size: 30,
+                ),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Text('Internet')
+            ],
+          ),
+        ),
+
+        // Electricity Button
+        Container(
+          margin: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              // Icon
+              Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(132, 235, 232, 232),
+                    borderRadius: BorderRadius.circular(8)),
+                child: Icon(
+                  Icons.electric_bolt_sharp,
+                  size: 30,
+                ),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Text('Electricity')
+            ],
+          ),
+        ),
+
+        // Transport Button
+        Container(
+          margin: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              // Icon
+              Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(132, 235, 232, 232),
+                    borderRadius: BorderRadius.circular(8)),
+                child: Icon(
+                  Icons.emoji_transportation_outlined,
+                  size: 30,
+                ),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Text('Transport')
+            ],
+          ),
+        ),
+
+        // Loan Button
+        Container(
+          margin: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              // Icon
+              Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(132, 235, 232, 232),
+                    borderRadius: BorderRadius.circular(8)),
+                child: Icon(
+                  Icons.monetization_on_outlined,
+                  size: 30,
+                ),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Text('Loan')
+            ],
+          ),
+        ),
+
+        // More Button
+        Container(
+          margin: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              // Icon
+              Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(132, 235, 232, 232),
+                    borderRadius: BorderRadius.circular(8)),
+                child: Icon(
+                  Icons.arrow_forward_outlined,
+                  size: 30,
+                ),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Text('More')
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
 
-
-// Row(
-//           children: [
-//             Container(
-//                 width: 90,
-//
-//                 child: Column(
-//                   // crossAxisAlignment: CrossAxisAlignment.cente,
-//                   children: [
-//                     Image.asset(
-//                       'assets/images/internet_access.png',
-//                       width: 35,
-//                     ),
-//                     Text(
-//                       'Internet Services',
-//                       textAlign: TextAlign.center,
-//                     )
-//                   ],
-//                 ))
-//           ],
-//         ),
