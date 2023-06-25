@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
+
+import 'package:swiftpay/widgets/modal_screen.dart';
+
 class TransferPage extends StatefulWidget {
   const TransferPage({super.key});
 
@@ -9,17 +10,18 @@ class TransferPage extends StatefulWidget {
 }
 
 class _TransferPageState extends State<TransferPage> {
-  void _showModal () {
-    if (Platform.isIOS) {
-      showCupertinoModalPopup(context: context, builder: (ctx) => CupertinoAlertDialog(title: Text('Select Bank'), actions: [
-        Wrap(children: [
-          
-        ],)
-      ],));
-    } else {
-      
+  final _form = GlobalKey<FormState>();
+
+  void _submit () {
+    final _isValid = _form.currentState!.validate();
+
+    if (!_isValid) {
+      return;
     }
+
+    _form.currentState!.save();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,48 +31,75 @@ class _TransferPageState extends State<TransferPage> {
       child: Column(
         children: [
           const SizedBox(height: 150),
+          // Transfer Details form
           Form(
-              child: Column(
-            children: [
-              SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    'Bank Account Number',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  )),
-              const SizedBox(height: 15),
-              TextFormField(
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 35),
-              SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    'Card Number',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  )),
-              const SizedBox(height: 15),
-              TextFormField(
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 35),
-              ElevatedButton.icon(
-                onPressed: _showModal,
-                icon: Icon(Icons.arrow_forward,
-                    color: Theme.of(context).colorScheme.background),
-                label: Text(
-                  'Select Bank',
-                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.background),
+            key: _form,
+            child: Column(
+              children: [
+                // Recipients Input
+                SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      'Recipient\'s Account Number',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    )),
+                const SizedBox(height: 15),
+                TextFormField(
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter 10-digit Account Number'),
+                      keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value!.isEmpty || value.trim().length < 9+1) {
+                      return 'Input a valid account number';
+                    }
+                    return null;
+                  },
                 ),
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.onBackground,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    minimumSize: const Size(double.infinity, 45.0)),
-              ),
-            ],
-          ))
+
+                const SizedBox(height: 20),
+
+                // SelectBank Button
+                ElevatedButton.icon(
+                  onPressed: () {
+                    showModalBottomSheet(
+                        context: context, builder: (context) => ModalScreen());
+                  },
+                  icon: Icon(Icons.arrow_forward,
+                      color: Theme.of(context).colorScheme.background),
+                  label: Text(
+                    'Select Bank',
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.background),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          Theme.of(context).colorScheme.onBackground,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      minimumSize: const Size(double.infinity, 45.0)),
+                ),
+                const SizedBox(height: 35),
+
+                // Proceed to pay button
+                ElevatedButton(
+                  onPressed: _submit,
+                  child: Text(
+                    'Proceed to pay',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onBackground, fontSize: 17, ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          Theme.of(context).colorScheme.primaryContainer,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          minimumSize: Size(double.infinity, 40)
+                          ),
+                          
+                )
+              ],
+            ),
+          ),
         ],
       ),
     ));

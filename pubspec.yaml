@@ -78,6 +78,12 @@ flutter:
     - assets/images/loan.png
     - assets/images/netflix.png
     - assets/images/transport.png
+    - assets/images/banks/access.png
+    - assets/images/banks/firstbank.png
+    - assets/images/banks/gtbank.png
+    - assets/images/banks/kuda.png
+    - assets/images/banks/swiftpay.png
+    - assets/images/banks/opay.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
