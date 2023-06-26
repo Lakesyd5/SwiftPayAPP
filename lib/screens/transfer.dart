@@ -11,8 +11,9 @@ class TransferPage extends StatefulWidget {
 
 class _TransferPageState extends State<TransferPage> {
   final _form = GlobalKey<FormState>();
+  String selectedBank = '';
 
-  void _submit () {
+  void _submit() {
     final _isValid = _form.currentState!.validate();
 
     if (!_isValid) {
@@ -20,6 +21,12 @@ class _TransferPageState extends State<TransferPage> {
     }
 
     _form.currentState!.save();
+  }
+
+  void _selectBank(String bankName) {
+    setState(() {
+      selectedBank = bankName;
+    });
   }
 
   @override
@@ -48,9 +55,11 @@ class _TransferPageState extends State<TransferPage> {
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter 10-digit Account Number'),
-                      keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.number,
                   validator: (value) {
-                    if (value!.isEmpty || value.trim().length < 9+1) {
+                    if (value!.isEmpty ||
+                        value.trim().length < 10 ||
+                        int.tryParse(value) == null) {
                       return 'Input a valid account number';
                     }
                     return null;
@@ -63,12 +72,15 @@ class _TransferPageState extends State<TransferPage> {
                 ElevatedButton.icon(
                   onPressed: () {
                     showModalBottomSheet(
-                        context: context, builder: (context) => ModalScreen());
+                      context: context,
+                      builder: (context) =>
+                          ModalScreen(onBankSelected: _selectBank),
+                    );
                   },
                   icon: Icon(Icons.arrow_forward,
                       color: Theme.of(context).colorScheme.background),
                   label: Text(
-                    'Select Bank',
+                    selectedBank.isEmpty ? 'Select Bank' : selectedBank,
                     style: Theme.of(context).textTheme.labelLarge!.copyWith(
                         color: Theme.of(context).colorScheme.background),
                   ),
@@ -87,15 +99,16 @@ class _TransferPageState extends State<TransferPage> {
                   child: Text(
                     'Proceed to pay',
                     style: TextStyle(
-                        color: Theme.of(context).colorScheme.onBackground, fontSize: 17, ),
+                      color: Theme.of(context).colorScheme.onBackground,
+                      fontSize: 17,
+                    ),
                   ),
                   style: ElevatedButton.styleFrom(
                       backgroundColor:
                           Theme.of(context).colorScheme.primaryContainer,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                          minimumSize: Size(double.infinity, 40)
-                          ),
-                          
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      minimumSize: Size(double.infinity, 40)),
                 )
               ],
             ),

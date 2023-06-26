@@ -3,9 +3,26 @@
 import 'package:flutter/material.dart';
 
 
-class ModalScreen extends StatelessWidget {
+class ModalScreen extends StatefulWidget {
+  const ModalScreen({super.key, required this.onBankSelected});
+
+  final Function(String) onBankSelected;
+
+  @override
+  State<ModalScreen> createState() => _ModalScreenState();
+}
+
+class _ModalScreenState extends State<ModalScreen> {
   @override
   Widget build(BuildContext context) {
+
+    String selectedBank = '';
+
+  void selectBank(String bankName) {
+    Navigator.pop(context); // Close the Modal Screen
+    widget.onBankSelected(bankName);  
+  }
+
     return Container(
       padding: EdgeInsets.all(20),
       color: Colors.white,
@@ -24,74 +41,104 @@ class ModalScreen extends StatelessWidget {
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 // SwiftPay Bank Select
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Image.asset('assets/images/banks/swiftpay.png'),
-                      SizedBox(height: 10),
-                      Text('SWIFTPAY', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
-                    ],
+                GestureDetector(
+                  onTap: () {
+                    selectBank ('SwiftPay');
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        Image.asset('assets/images/banks/swiftpay.png'),
+                        SizedBox(height: 10),
+                        Text('SWIFTPAY', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
+                      ],
+                    ),
                   ),
                 ),
 
                 // Firstbank Select
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Image.asset('assets/images/banks/firstbank.png'),
-                      SizedBox(height: 10),
-                      Text('FIRST BANK PLC', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
-                    ],
+                GestureDetector(
+                  onTap: () {
+                    selectBank ('Firstbank');
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        Image.asset('assets/images/banks/firstbank.png'),
+                        SizedBox(height: 10),
+                        Text('FIRST BANK PLC', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
+                      ],
+                    ),
                   ),
                 ),
 
                 // GT BANk Select
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Image.asset('assets/images/banks/gtbank.png'),
-                      SizedBox(height: 10),
-                      Text('GTBANK PLC', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
-                    ],
+                GestureDetector(
+                  onTap: () {
+                    selectBank ('GTBank');
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        Image.asset('assets/images/banks/gtbank.png'),
+                        SizedBox(height: 10),
+                        Text('GTBANK PLC', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
+                      ],
+                    ),
                   ),
                 ),
 
                 // Kuda Select
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Image.asset('assets/images/banks/kuda.png'),
-                      SizedBox(height: 10),
-                      Text('KUDA', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
-                    ],
+                GestureDetector(
+                  onTap: () {
+                    selectBank ('Kuda MFB');
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        Image.asset('assets/images/banks/kuda.png'),
+                        SizedBox(height: 10),
+                        Text('KUDA', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
+                      ],
+                    ),
                   ),
                 ),
 
                 // Access Bank Select
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Image.asset('assets/images/banks/access.png'),
-                      SizedBox(height: 10),
-                      Text('ACCESS BANK', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
-                    ],
+                GestureDetector(
+                  onTap: () {
+                    selectBank ('Access Bank');
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        Image.asset('assets/images/banks/access.png'),
+                        SizedBox(height: 10),
+                        Text('ACCESS BANK', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
+                      ],
+                    ),
                   ),
                 ),
 
                 // Opay Select
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Image.asset('assets/images/banks/opay.png'),
-                      SizedBox(height: 10),
-                      Text('OPAY', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
-                    ],
+                GestureDetector(
+                  onTap: () {
+                    selectBank ('Opay');
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        Image.asset('assets/images/banks/opay.png'),
+                        SizedBox(height: 10),
+                        Text('OPAY', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
+                      ],
+                    ),
                   ),
                 ),
               ],
