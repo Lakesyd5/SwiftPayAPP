@@ -1,7 +1,6 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:swiftpay/pages/finances.dart';
 
 import 'package:swiftpay/pages/history.dart';
 import 'package:swiftpay/pages/home.dart';
@@ -28,7 +27,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     const HomePage(),
     const SavingsPage(),
     const HistoryPage(),
-    const FinancesPage(),
     const ManageAccount()
   ];
 

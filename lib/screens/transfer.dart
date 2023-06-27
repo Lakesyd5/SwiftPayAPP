@@ -96,6 +96,12 @@ class _TransferPageState extends State<TransferPage> {
                 // Proceed to pay button
                 ElevatedButton(
                   onPressed: _submit,
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          Theme.of(context).colorScheme.primaryContainer,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      minimumSize: Size(double.infinity, 40)),
                   child: Text(
                     'Proceed to pay',
                     style: TextStyle(
@@ -103,12 +109,6 @@ class _TransferPageState extends State<TransferPage> {
                       fontSize: 17,
                     ),
                   ),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Theme.of(context).colorScheme.primaryContainer,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      minimumSize: Size(double.infinity, 40)),
                 )
               ],
             ),

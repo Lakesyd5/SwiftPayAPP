@@ -13,16 +13,15 @@ class ModalScreen extends StatefulWidget {
 }
 
 class _ModalScreenState extends State<ModalScreen> {
-  @override
-  Widget build(BuildContext context) {
-
-    String selectedBank = '';
+  String selectedBank = '';
 
   void selectBank(String bankName) {
     Navigator.pop(context); // Close the Modal Screen
     widget.onBankSelected(bankName);  
   }
 
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(20),
       color: Colors.white,
