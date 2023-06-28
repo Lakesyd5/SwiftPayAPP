@@ -23,11 +23,11 @@ class _AuthScreenState extends State<AuthScreen> {
   var _enteredLastname = '';
   var _enteredEmail = '';
   var _enteredPassword = '';
+  var _enteredPhoneNumber = '';
   var _isAuthenticating = false;
 
   void _submit() async {
     final _isValid = _form.currentState!.validate();
-    
 
     if (!_isValid) {
       return;
@@ -41,34 +41,41 @@ class _AuthScreenState extends State<AuthScreen> {
       });
       if (!_isLogin) {
         // Login an Existing User...
-       final userCredentials = await _firebase.signInWithEmailAndPassword(email: _enteredEmail, password: _enteredPassword);
-       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const DashboardScreen(),));
-      }else {
+        final userCredentials = await _firebase.signInWithEmailAndPassword(
+            email: _enteredEmail, password: _enteredPassword);
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const DashboardScreen(),
+            ));
+      } else {
         // Create New User...
-       final userCredentials = await _firebase.createUserWithEmailAndPassword(email: _enteredEmail, password: _enteredPassword);
+        final userCredentials = await _firebase.createUserWithEmailAndPassword(
+            email: _enteredEmail, password: _enteredPassword);
 
-       final userData = {
-        'Firstname' : _enteredFirstname,
-        'Lastname' : _enteredLastname,
-        'email' : _enteredEmail,
-       };
+        final userData = {
+          'Firstname': _enteredFirstname,
+          'Lastname': _enteredLastname,
+          'email': _enteredEmail,
+          'Phone Number': _enteredPhoneNumber,
+        };
 
-       db.collection('users').doc(userCredentials.user!.uid).set(userData);
-       Navigator.push(context, MaterialPageRoute(builder: (context) =>  AccountGenerateScreen(data: userData),));
-
+        db.collection('users').doc(userCredentials.user!.uid).set(userData);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AccountGenerateScreen(data: userData),
+            ));
       }
-
-      
     } on FirebaseAuthException catch (error) {
       ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.message ?? 'Authentication Failed')));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error.message ?? 'Authentication Failed')));
 
       setState(() {
         _isAuthenticating = false;
       });
     }
-
-    
   }
 
   @override
@@ -98,7 +105,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     : 'Login to your SwiftPay account to continue',
                 style: const TextStyle(fontWeight: FontWeight.w500),
               ),
-              const SizedBox(height: 60),
+              const SizedBox(height: 45),
               // FORM
               Form(
                 key: _form,
@@ -139,6 +146,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           _enteredFirstname = value!;
                         },
                       ),
+
                     // Last Name Area
                     if (_isLogin)
                       const SizedBox(
@@ -178,6 +186,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           _enteredLastname = value!;
                         },
                       ),
+
                     // Email Area
                     if (_isLogin)
                       const SizedBox(
@@ -214,6 +223,44 @@ class _AuthScreenState extends State<AuthScreen> {
                         _enteredEmail = value!;
                       },
                     ),
+
+                    // Phone Number Area
+                    if (_isLogin) SizedBox(height: 20),
+                    if (_isLogin)
+                      SizedBox(
+                        width: double.infinity,
+                        child: Text(
+                          'Phone Number',
+                          textAlign: TextAlign.left,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.background),
+                        ),
+                      ),
+                    if (_isLogin) const SizedBox(height: 15),
+                    if (_isLogin)
+                      TextFormField(
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Valid Phone Number'),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null ||
+                              value.trim().isEmpty ||
+                              int.tryParse(value) == null ||
+                              value.length < 11) {
+                            return 'Please input a valid phone number.';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _enteredPhoneNumber = value!;
+                        },
+                      ),
+
                     // Password Area
                     const SizedBox(
                       height: 20,
@@ -247,11 +294,11 @@ class _AuthScreenState extends State<AuthScreen> {
                       },
                     ),
                     const SizedBox(height: 40),
-                    if (_isAuthenticating)
-                    const CircularProgressIndicator(),
+                    if (_isAuthenticating) const CircularProgressIndicator(),
+
                     // Login Or Sign Up Button
-                    if(!_isAuthenticating)
-                    ElevatedButton(
+                    if (!_isAuthenticating)
+                      ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               Theme.of(context).colorScheme.primaryContainer,
@@ -259,7 +306,6 @@ class _AuthScreenState extends State<AuthScreen> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                           minimumSize: const Size(double.infinity, 55),
-                          // padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 120)
                         ),
                         onPressed: _submit,
                         child: Text(
@@ -271,10 +317,12 @@ class _AuthScreenState extends State<AuthScreen> {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .onBackground),
-                        )),
+                        ),
+                      ),
+
                     // Have An Account Or Not
-                    if(!_isAuthenticating)
-                    TextButton(
+                    if (!_isAuthenticating)
+                      TextButton(
                         onPressed: () {
                           setState(() {
                             _isLogin = !_isLogin;
@@ -291,7 +339,8 @@ class _AuthScreenState extends State<AuthScreen> {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .primaryContainer),
-                        )),
+                        ),
+                      ),
                   ],
                 ),
               ),
