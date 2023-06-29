@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:swiftpay/read%20data/get_user_data.dart';
 
 import 'package:swiftpay/screens/auth.dart';
 
@@ -13,36 +12,37 @@ class ManageAccount extends StatefulWidget {
 }
 
 class _ManageAccountState extends State<ManageAccount> {
-  // final user = FirebaseAuth.instance.currentUser;
-  final data = '';
+  String firstName = '';
+  String lastName = '';
+  String phoneNumber = '';
+  String accNumber = '';
+  String email = '';
+  String pin = '';
 
-
-  Future<String?> getUser(String email) async {
-    try {
-      CollectionReference users =
-          FirebaseFirestore.instance.collection('users');
-      final snapshot = await users.doc().get();
-      final data = snapshot.data() as Map<String, dynamic>;
-    } catch (e) {
-      return 'Error fetching user';
-    }
+  @override
+  void initState() {
+    super.initState();
+    fetchUserData();
   }
 
-  // final userData = FirebaseFirestore.instance.collection('users').snapshots();
+  Future<void> fetchUserData() async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    final userSnapshot = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    final userData = userSnapshot.data();
+    print(userData);
+    if (userData != null) {
+      setState(() {
+        firstName = userData['Firstname'];
+        lastName = userData['Lastname'];
+        phoneNumber = userData['Phone Number'];
+        accNumber = userData['Account Number'];
+        email = userData['email'];
+        pin = userData['Pin'];
 
-  // var docId = ''; 
-
-  // // get the collection
-  // Future getDocId() async {
-  //   await FirebaseFirestore.instance.collection('users').get().then((snapshot) => snapshot.docs.forEach((element) { 
-  //     print(element.reference);
-  //     docId = element.reference as String;
-  //   }));
-  // }
-
-  
-    
-
+      });
+    }
+  }
+      
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -61,9 +61,9 @@ class _ManageAccountState extends State<ManageAccount> {
                     children: [
                       CircleAvatar(),
                       SizedBox(height: 10),
-                      Text('Hello, Michael', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
+                      Text('Hello, $firstName', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
                       SizedBox(height: 5),
-                      Text('Michael Jackson'),
+                      Text('$firstName $lastName'),
                       SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -73,7 +73,7 @@ class _ManageAccountState extends State<ManageAccount> {
                             children: [
                               Text('SwiftPay Account Number', style: Theme.of(context).textTheme.labelMedium,),
                               SizedBox(height: 6),
-                              Text('7014024882', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),)
+                              Text(accNumber, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),)
                             ],
                           ),
                           // SizedBox(width: 19),
@@ -83,7 +83,7 @@ class _ManageAccountState extends State<ManageAccount> {
                             children: [
                               Text('SwiftPay Transaction Pin', style: Theme.of(context).textTheme.labelMedium,),
                               SizedBox(height: 6),
-                              Text('3962', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),)
+                              Text(pin, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),)
                             ],
                           ),
                         ],
@@ -95,10 +95,7 @@ class _ManageAccountState extends State<ManageAccount> {
                 
 
                 // Second Container
-                FutureBuilder(
-                  // future: getDocId(),
-                  builder: (context, snapshot) {
-                    return Container(
+                Container(
                       width: double.infinity,
                       padding: EdgeInsets.all(15),
                       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
@@ -108,8 +105,7 @@ class _ManageAccountState extends State<ManageAccount> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                             Text('Username(First Name)', style: Theme.of(context).textTheme.labelMedium,),
-                            // GetUserData(documentId: getDocId()),
-                            // Text('Michael', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),)
+                            Text(firstName, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),)
                           ],),
                           SizedBox(height: 20),
 
@@ -117,7 +113,7 @@ class _ManageAccountState extends State<ManageAccount> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                             Text('Full Name', style: Theme.of(context).textTheme.labelMedium,),
-                            Text('Michael Jackson', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),)
+                            Text('$firstName $lastName', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),)
                           ],),
                           SizedBox(height: 20),
 
@@ -125,7 +121,7 @@ class _ManageAccountState extends State<ManageAccount> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                             Text('Email Address', style: Theme.of(context).textTheme.labelMedium,),
-                            Text('michaeljackson@gmail.com', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),)
+                            Text(email, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),)
                           ],),
                           SizedBox(height: 20),
 
@@ -133,13 +129,11 @@ class _ManageAccountState extends State<ManageAccount> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                             Text('Phone Number', style: Theme.of(context).textTheme.labelMedium,),
-                            Text('08037622324', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),)
+                            Text(phoneNumber, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),)
                           ],),
                         ],
                       ),
-                    );
-                  }
-                ),
+                    ),
                 SizedBox(height: 20),
                 
 
