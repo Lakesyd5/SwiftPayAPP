@@ -59,6 +59,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
                   border: OutlineInputBorder(), hintText: 'Just four digits'),
               keyboardType: TextInputType.number,
               obscureText: true,
+              maxLength: 4,
               validator: (value) {
                 if (value == null || value.trim().isEmpty || value.length < 4 || value.length > 4 ) {
                   return 'Please input a valid transaction PIN.';

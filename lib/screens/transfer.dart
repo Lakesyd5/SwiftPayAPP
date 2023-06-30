@@ -56,6 +56,7 @@ class _TransferPageState extends State<TransferPage> {
                       border: OutlineInputBorder(),
                       hintText: 'Enter 10-digit Account Number'),
                   keyboardType: TextInputType.number,
+                  maxLength: 10,
                   validator: (value) {
                     if (value!.isEmpty ||
                         value.trim().length < 10 ||

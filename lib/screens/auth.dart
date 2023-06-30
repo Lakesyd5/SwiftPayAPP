@@ -247,6 +247,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             border: OutlineInputBorder(),
                             hintText: 'Valid Phone Number'),
                         keyboardType: TextInputType.number,
+                        maxLength: 11,
                         validator: (value) {
                           if (value == null ||
                               value.trim().isEmpty ||
