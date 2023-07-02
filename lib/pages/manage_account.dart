@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import 'package:swiftpay/screens/auth.dart';
 
@@ -22,17 +23,52 @@ class _ManageAccountState extends State<ManageAccount> {
 
   File? _pickedImageFile;
 
+  // Upload Image to Firebase Storage
+  Future<void> uploadImageAndSaveUserData(File imageFile) async {
+    try {
+      final storageRef = firebase_storage.FirebaseStorage.instance.ref().child('user_image/${DateTime.now().toIso8601String()}');
+      final uploadTask = storageRef.putFile(imageFile);
+      final snapshot = await uploadTask.whenComplete(() {});
+      final downloadURL = await snapshot.ref.getDownloadURL();
+
+      final userId = FirebaseAuth.instance.currentUser!.uid;
+      final userRef = FirebaseFirestore.instance.collection('users').doc(userId);
+      await userRef.update({'imageURL': downloadURL});
+
+      setState(() {
+        _pickedImageFile = imageFile;
+      });
+
+      print('Image uploadded to Firebase Storage: $downloadURL');
+    } catch (e) {
+      print('Error uploading image to Firebase Storage: $e');
+    }
+  }
+
   // Pick user image method
-  void _pickImage() async{
+  void _pickImage() async {
     final pickedImage = await ImagePicker().pickImage(source: ImageSource.camera, imageQuality: 50, maxWidth: 150);
 
     if (pickedImage == null) {
       return;
     }
 
-    setState(() {
-      _pickedImageFile = File(pickedImage.path);
-    });
+    final imageFile = File(pickedImage.path);
+
+    await uploadImageAndSaveUserData(imageFile);
+
+    // setState(() {
+    //   _pickedImageFile = imageFile;
+    // });
+
+    // final downloadURL = await uploadImageToFirebaseStorage(imageFile);
+    // if (downloadURL.isNotEmpty) {
+    //   // Image uploaded successfully, do something with the donload URL
+    //   print('Image uploaded to Firebase Storage: $downloadURL');
+    // } else {
+    //   // Handle error while uploading image
+    //   print('Failed to upload image to Firebase Storage');
+    // }
   }
 
   @override
@@ -64,6 +100,7 @@ class _ManageAccountState extends State<ManageAccount> {
                 final accNumber = userData?['Account Number'] ?? '';
                 final email = userData?['email'] ?? '';
                 final pin = userData?['Pin'] ?? '';
+                final imageURL = userData?['imageURL'] ?? '';
 
                 return Column(
                   children: [
@@ -79,8 +116,10 @@ class _ManageAccountState extends State<ManageAccount> {
                           // User image Preview and add button
                           CircleAvatar(
                             radius: 40,
-                            backgroundColor: Colors.grey,
-                            foregroundImage: _pickedImageFile != null ? FileImage(_pickedImageFile!) : null,
+                            backgroundColor: Color.fromARGB(255, 196, 195, 195),
+                            // foregroundImage: _pickedImageFile != null ? FileImage(_pickedImageFile!) : null,
+                            backgroundImage: imageURL.isNotEmpty ? NetworkImage(imageURL) : null,
+                            child: imageURL.isNotEmpty ? null : Icon(Icons.person, size: 40, color: Colors.white54,),
                           ),
                           TextButton.icon(
                               onPressed: _pickImage,

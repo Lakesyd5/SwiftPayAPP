@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         child: ListView(children: [
           Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -46,10 +46,13 @@ class HomePage extends StatelessWidget {
                               final userData = snapshot.data!.data();
                               final firstName = userData?['Firstname'] ?? '';
                               final lastName = userData?['Lastname'] ?? '';
+                              final imageURL = userData?['imageURL'] ?? '';
                               return Row(
                                 children: [
-                                  const CircleAvatar(
-                                    child: Icon(Icons.person),
+                                  CircleAvatar(
+                                    backgroundColor: Colors.white54,
+                                    backgroundImage: imageURL.isNotEmpty ? NetworkImage(imageURL) : null,
+                                    child: imageURL.isNotEmpty ? null : Icon(Icons.person),
                                   ),
                                   const SizedBox(width: 6),
                                   Column(

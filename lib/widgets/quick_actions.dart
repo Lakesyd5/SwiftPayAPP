@@ -9,8 +9,8 @@ class QuickActionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 10.0,
-      runSpacing: 10,
+      spacing: 9.3,
+      runSpacing: 9.3,
       children: [
         // Transfer Tab
         GestureDetector(
@@ -20,7 +20,7 @@ class QuickActionScreen extends StatelessWidget {
             ));
           },
           child: Container(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
@@ -62,7 +62,7 @@ class QuickActionScreen extends StatelessWidget {
 
         // Receive Money Tab
         Container(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
@@ -103,7 +103,7 @@ class QuickActionScreen extends StatelessWidget {
 
         // Add Money Tab
         Container(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
@@ -143,7 +143,7 @@ class QuickActionScreen extends StatelessWidget {
 
         // Airtime Top-Up Tab
         Container(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
