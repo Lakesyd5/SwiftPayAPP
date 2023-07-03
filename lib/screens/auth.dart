@@ -24,6 +24,7 @@ class _AuthScreenState extends State<AuthScreen> {
   var _enteredEmail = '';
   var _enteredPassword = '';
   var _enteredPhoneNumber = '';
+  final _userBalance = '15,000';
   var _isAuthenticating = false;
 
   void _submit() async {
@@ -58,6 +59,7 @@ class _AuthScreenState extends State<AuthScreen> {
           'Lastname': _enteredLastname,
           'email': _enteredEmail,
           'Phone Number': _enteredPhoneNumber,
+          'Account Balance': _userBalance,
         };
 
         db.collection('users').doc(userCredentials.user!.uid).set(userData);

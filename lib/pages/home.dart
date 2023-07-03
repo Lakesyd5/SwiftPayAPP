@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,15 +51,19 @@ class HomePage extends StatelessWidget {
                                 children: [
                                   CircleAvatar(
                                     backgroundColor: Colors.white54,
-                                    backgroundImage: imageURL.isNotEmpty ? NetworkImage(imageURL) : null,
-                                    child: imageURL.isNotEmpty ? null : Icon(Icons.person),
+                                    backgroundImage: imageURL.isNotEmpty
+                                        ? NetworkImage(imageURL)
+                                        : null,
+                                    child: imageURL.isNotEmpty
+                                        ? null
+                                        : Icon(Icons.person),
                                   ),
                                   const SizedBox(width: 6),
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text('Hello, $firstName'),
+                                      Text('Hello, $firstName', style: TextStyle(fontWeight: FontWeight.w500),),
                                       // SizedBox(height: 4),
                                       Text('$firstName $lastName',
                                           style: TextStyle(
@@ -87,10 +91,13 @@ class HomePage extends StatelessWidget {
                 CardDisplay(),
                 const SizedBox(height: 30),
 
-                Text(
-                  'Quick Actions',
-                  style: Theme.of(context).textTheme.labelLarge,
-                  textAlign: TextAlign.start,
+                Container(
+                  width: double.infinity,
+                  child: Text(
+                    'Quick Actions',
+                    style: Theme.of(context).textTheme.labelLarge,
+                    textAlign: TextAlign.start,
+                  ),
                 ),
                 const SizedBox(height: 20),
 
@@ -98,10 +105,13 @@ class HomePage extends StatelessWidget {
                 QuickActionScreen(),
                 const SizedBox(height: 30),
 
-                Text(
-                  'Other Actions',
-                  style: Theme.of(context).textTheme.labelLarge,
-                  textAlign: TextAlign.start,
+                Container(
+                  width: double.infinity,
+                  child: Text(
+                    'Other Actions',
+                    style: Theme.of(context).textTheme.labelLarge,
+                    // textAlign: TextAlign.start,
+                  ),
                 ),
                 const SizedBox(height: 20),
 
