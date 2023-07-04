@@ -42,9 +42,9 @@ class _AccountGenerateScreenState extends State<AccountGenerateScreen> {
 
     for (int i = 0; i < 10; i++) {
       accountNumber += random.nextInt(10).toString();
-      if (i < 9) {
-        accountNumber += ' ';
-      }
+      // if (i < 9) {
+      //   accountNumber += ' ';
+      // }
     }
 
     // saves the users account number to the database

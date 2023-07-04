@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:swiftpay/screens/recipient_display.dart';
 
 import 'package:swiftpay/widgets/modal_screen.dart';
 
@@ -12,8 +14,12 @@ class TransferPage extends StatefulWidget {
 class _TransferPageState extends State<TransferPage> {
   final _form = GlobalKey<FormState>();
   String selectedBank = '';
+  String recipientAccountNumber = '';
+  bool isLoading = false;
+  Map<String, dynamic>? recipientUserData;
 
-  void _submit() {
+
+  void _submit() async {
     final _isValid = _form.currentState!.validate();
 
     if (!_isValid) {
@@ -21,6 +27,35 @@ class _TransferPageState extends State<TransferPage> {
     }
 
     _form.currentState!.save();
+
+    setState(() {
+      isLoading = true;
+      recipientUserData = null;
+    });
+
+    try {
+      final QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').where('Account Number', isEqualTo: recipientAccountNumber).limit(1).get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        recipientUserData = querySnapshot.docs.first.data() as Map<String, dynamic>;
+        // If user exists 
+        Navigator.push(context, MaterialPageRoute(builder: (context) => RecipientScreen(recipientData: recipientUserData!)));
+      }else {
+        // If user does not exist, show a snackbar 
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Recipient not found'),
+          ));
+      }
+    } catch (error) {
+      print('Error fetching user: $error');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+    print(recipientUserData);
+
   }
 
   void _selectBank(String bankName) {
@@ -65,6 +100,9 @@ class _TransferPageState extends State<TransferPage> {
                     }
                     return null;
                   },
+                  onSaved: (value) {
+                    recipientAccountNumber = value!;
+                  },
                 ),
 
                 const SizedBox(height: 20),
@@ -94,8 +132,10 @@ class _TransferPageState extends State<TransferPage> {
                       minimumSize: const Size(double.infinity, 45.0)),
                 ),
                 const SizedBox(height: 35),
+                if (isLoading) CircularProgressIndicator(),
 
                 // Proceed to pay button
+                if (!isLoading) 
                 ElevatedButton(
                   onPressed: _submit,
                   style: ElevatedButton.styleFrom(
