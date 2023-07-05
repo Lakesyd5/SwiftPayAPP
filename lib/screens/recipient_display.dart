@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:swiftpay/screens/recipient_details.dart';
 
 class RecipientScreen extends StatefulWidget {
   const RecipientScreen({super.key, required this.recipientData});
@@ -14,6 +17,11 @@ class RecipientScreen extends StatefulWidget {
 class _RecipientScreenState extends State<RecipientScreen> {
   final _form = GlobalKey<FormState>();
   bool isLoading = false;
+  var _amount = '';
+  var _narration = '';
+
+
+  final sender_UserId = FirebaseAuth.instance.currentUser!.uid;
 
   void _submit () {
     final _isValid = _form.currentState!.validate();
@@ -28,7 +36,20 @@ class _RecipientScreenState extends State<RecipientScreen> {
       isLoading = true;
     });
 
+    String senderId = sender_UserId;
+    String receiverAccountNumber = widget.recipientData['Account Number'];
+    String amount = _amount;
+    String transactionType = 'Debit';
+    String narration = _narration;
+
+    // saveTransaction(senderId, receiverAccountNumber, amount, transactionType, narration);
+
+    // Navigate to the next screen
+    Navigator.push(context, MaterialPageRoute(builder: (context) => RecipientDetailsScreen(senderId: senderId, receiverAccountNumber: receiverAccountNumber, amount: amount, transactionType: transactionType, narration: narration ),));
+
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -65,14 +86,20 @@ class _RecipientScreenState extends State<RecipientScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: Text('How much do you want to send?')),
-                  SizedBox(height: 10,),  
+                  SizedBox(height: 10),
+
+                  // Amount Input 
                   TextFormField(
-                    decoration: InputDecoration(border: OutlineInputBorder(), hintText: 'Enter amount'),
+                    decoration: InputDecoration(border: OutlineInputBorder(), hintText: 'Enter amount', prefixText: '₦',),
+                    keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value!.isEmpty || int.tryParse(value) == null) {
-                        return 'Please input an amount';
+                        return 'Please input an amount.';
                       }
                       return null;
+                    },
+                    onSaved: (value) {
+                      _amount = value!;
                     },
                   ),
                   SizedBox(height: 30),
@@ -80,19 +107,31 @@ class _RecipientScreenState extends State<RecipientScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: Text('Transaction Narration')),
-                  SizedBox(height: 10,),  
+                  SizedBox(height: 10),  
+
+                  // Narration Input
                   TextFormField(
                     decoration: InputDecoration(border: OutlineInputBorder(), hintText: 'Narration'),
                     keyboardType: TextInputType.number,
-                    
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please write a narration.';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _narration = value!;
+                    },
                     
                   ),
                   SizedBox(height: 40),
-
+                  if(isLoading) CircularProgressIndicator(),
+                  
                   // Next Button
+                  if(!isLoading)
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primaryContainer, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)), minimumSize: Size(double.infinity, 45)),
-                    onPressed: () {}, child: Text('Next',style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onBackground),)),
+                    onPressed: _submit, child: Text('Next',style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onBackground),)),
                 ],
               ))
             ],

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:swiftpay/screens/recipient_display.dart';
 
@@ -18,7 +19,6 @@ class _TransferPageState extends State<TransferPage> {
   bool isLoading = false;
   Map<String, dynamic>? recipientUserData;
 
-
   void _submit() async {
     final _isValid = _form.currentState!.validate();
 
@@ -34,18 +34,37 @@ class _TransferPageState extends State<TransferPage> {
     });
 
     try {
-      final QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').where('Account Number', isEqualTo: recipientAccountNumber).limit(1).get();
+      final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('Account Number', isEqualTo: recipientAccountNumber)
+          .limit(1)
+          .get();
 
       if (querySnapshot.docs.isNotEmpty) {
-        recipientUserData = querySnapshot.docs.first.data() as Map<String, dynamic>;
-        // If user exists 
-        Navigator.push(context, MaterialPageRoute(builder: (context) => RecipientScreen(recipientData: recipientUserData!)));
-      }else {
-        // If user does not exist, show a snackbar 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Recipient not found'),
-          ));
+        recipientUserData =
+            querySnapshot.docs.first.data() as Map<String, dynamic>;
+        // If user exists
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    RecipientScreen(recipientData: recipientUserData!)));
+      } else {
+        // If user does not exist, show an alert
+        showDialog(
+          context: context,
+          builder: (context) => CupertinoAlertDialog(
+            title: Text('Opps!!!'),
+            content: Text('The Recipient was not found'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'))
+            ],
+          ),
+        );
       }
     } catch (error) {
       print('Error fetching user: $error');
@@ -55,7 +74,6 @@ class _TransferPageState extends State<TransferPage> {
       });
     }
     print(recipientUserData);
-
   }
 
   void _selectBank(String bankName) {
@@ -106,7 +124,6 @@ class _TransferPageState extends State<TransferPage> {
                 ),
 
                 const SizedBox(height: 20),
-                
 
                 // SelectBank Button
                 ElevatedButton.icon(
@@ -135,23 +152,23 @@ class _TransferPageState extends State<TransferPage> {
                 if (isLoading) CircularProgressIndicator(),
 
                 // Proceed to pay button
-                if (!isLoading) 
-                ElevatedButton(
-                  onPressed: _submit,
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Theme.of(context).colorScheme.primaryContainer,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      minimumSize: Size(double.infinity, 40)),
-                  child: Text(
-                    'Proceed to pay',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onBackground,
-                      fontSize: 17,
+                if (!isLoading)
+                  ElevatedButton(
+                    onPressed: _submit,
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(context).colorScheme.primaryContainer,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)),
+                        minimumSize: Size(double.infinity, 40)),
+                    child: Text(
+                      'Proceed to pay',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onBackground,
+                        fontSize: 17,
+                      ),
                     ),
-                  ),
-                )
+                  )
               ],
             ),
           ),
