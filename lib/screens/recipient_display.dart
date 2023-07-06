@@ -19,11 +19,11 @@ class _RecipientScreenState extends State<RecipientScreen> {
   bool isLoading = false;
   var _amount = '';
   var _narration = '';
-
+  var _userBalance;
 
   final sender_UserId = FirebaseAuth.instance.currentUser!.uid;
 
-  void _submit () {
+  void _submit() async {
     final _isValid = _form.currentState!.validate();
 
     if (!_isValid) {
@@ -36,20 +36,45 @@ class _RecipientScreenState extends State<RecipientScreen> {
       isLoading = true;
     });
 
-    String senderId = sender_UserId;
-    String receiverAccountNumber = widget.recipientData['Account Number'];
-    String amount = _amount;
-    String transactionType = 'Debit';
-    String narration = _narration;
+    DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(sender_UserId)
+            .get();
 
-    // saveTransaction(senderId, receiverAccountNumber, amount, transactionType, narration);
+    if (userSnapshot.exists) {
+      Map<String, dynamic>? userData = userSnapshot.data();
 
-    // Navigate to the next screen
-    Navigator.push(context, MaterialPageRoute(builder: (context) => RecipientDetailsScreen(senderId: senderId, receiverAccountNumber: receiverAccountNumber, amount: amount, transactionType: transactionType, narration: narration ),));
+      if (userData != null) {
+        String _userBalance = userData['Account Balance'];
 
+        String recipientName = '${widget.recipientData['Firstname']} ${widget.recipientData['Lastname']}';
+        String senderId = sender_UserId;
+        String receiverAccountNumber = widget.recipientData['Account Number'];
+        String amount = _amount;
+        String transactionType = 'Debit';
+        String narration = _narration;
+        String bank = 'SWIFTPAY';
+        String userBalance = _userBalance;
+
+        // Navigate to the next screen
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => RecipientDetailsScreen(
+                  senderId: senderId,
+                  receiverAccountNumber: receiverAccountNumber,
+                  amount: amount,
+                  transactionType: transactionType,
+                  narration: narration,
+                  bank: bank,
+                  userBalance: userBalance,
+                  recipientName: recipientName,
+                  ),
+            ));
+      }
+    }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +92,8 @@ class _RecipientScreenState extends State<RecipientScreen> {
               ),
               Image.asset('assets/images/banks/swiftpay.png'),
               SizedBox(height: 15),
-              Text('${widget.recipientData['Firstname']} ${widget.recipientData['Lastname']}',
+              Text(
+                  '${widget.recipientData['Firstname']} ${widget.recipientData['Lastname']}',
                   style: Theme.of(context).textTheme.headlineSmall),
               SizedBox(height: 5),
               Text(
@@ -75,65 +101,86 @@ class _RecipientScreenState extends State<RecipientScreen> {
                 style: Theme.of(context).textTheme.labelMedium,
               ),
               SizedBox(height: 10),
-              Text('Available Balance:'),
+              Text('Available Balance: $_userBalance'),
               SizedBox(height: 90),
 
               // Form Filed
               Form(
-                key: _form,
-                child: Column(
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: Text('How much do you want to send?')),
-                  SizedBox(height: 10),
+                  key: _form,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                          width: double.infinity,
+                          child: Text('How much do you want to send?')),
+                      SizedBox(height: 10),
 
-                  // Amount Input 
-                  TextFormField(
-                    decoration: InputDecoration(border: OutlineInputBorder(), hintText: 'Enter amount', prefixText: '₦',),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value!.isEmpty || int.tryParse(value) == null) {
-                        return 'Please input an amount.';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _amount = value!;
-                    },
-                  ),
-                  SizedBox(height: 30),
+                      // Amount Input
+                      TextFormField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Enter amount',
+                          prefixText: '₦',
+                        ),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value!.isEmpty || int.tryParse(value) == null) {
+                            return 'Please input an amount.';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _amount = value!;
+                        },
+                      ),
+                      SizedBox(height: 30),
 
-                  SizedBox(
-                    width: double.infinity,
-                    child: Text('Transaction Narration')),
-                  SizedBox(height: 10),  
+                      SizedBox(
+                          width: double.infinity,
+                          child: Text('Transaction Narration')),
+                      SizedBox(height: 10),
 
-                  // Narration Input
-                  TextFormField(
-                    decoration: InputDecoration(border: OutlineInputBorder(), hintText: 'Narration'),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please write a narration.';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _narration = value!;
-                    },
-                    
-                  ),
-                  SizedBox(height: 40),
-                  if(isLoading) CircularProgressIndicator(),
-                  
-                  // Next Button
-                  if(!isLoading)
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primaryContainer, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)), minimumSize: Size(double.infinity, 45)),
-                    onPressed: _submit, child: Text('Next',style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onBackground),)),
-                ],
-              ))
+                      // Narration Input
+                      TextFormField(
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Narration'),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please write a narration.';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _narration = value!;
+                        },
+                      ),
+                      SizedBox(height: 40),
+                      if (isLoading) CircularProgressIndicator(),
+
+                      // Next Button
+                      if (!isLoading)
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                                minimumSize: Size(double.infinity, 45)),
+                            onPressed: _submit,
+                            child: Text(
+                              'Next',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground),
+                            )),
+                    ],
+                  ))
             ],
           ),
         ),

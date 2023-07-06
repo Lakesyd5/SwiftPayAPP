@@ -88,6 +88,7 @@ flutter:
     - assets/images/banks/opay.png
     - assets/images/power_button.png
     - assets/images/banks/greencheck.png
+    - assets/images/success.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

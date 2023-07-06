@@ -24,7 +24,7 @@ class _AuthScreenState extends State<AuthScreen> {
   var _enteredEmail = '';
   var _enteredPassword = '';
   var _enteredPhoneNumber = '';
-  final _userBalance = '15,000';
+  final _userBalance = '15000';
   var _isAuthenticating = false;
 
   void _submit() async {

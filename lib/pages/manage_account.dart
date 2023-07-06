@@ -56,19 +56,6 @@ class _ManageAccountState extends State<ManageAccount> {
     final imageFile = File(pickedImage.path);
 
     await uploadImageAndSaveUserData(imageFile);
-
-    // setState(() {
-    //   _pickedImageFile = imageFile;
-    // });
-
-    // final downloadURL = await uploadImageToFirebaseStorage(imageFile);
-    // if (downloadURL.isNotEmpty) {
-    //   // Image uploaded successfully, do something with the donload URL
-    //   print('Image uploaded to Firebase Storage: $downloadURL');
-    // } else {
-    //   // Handle error while uploading image
-    //   print('Failed to upload image to Firebase Storage');
-    // }
   }
 
   @override
