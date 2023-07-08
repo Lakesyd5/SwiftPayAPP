@@ -44,11 +44,7 @@ class _TransferPageState extends State<TransferPage> {
         recipientUserData =
             querySnapshot.docs.first.data() as Map<String, dynamic>;
         // If user exists
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    RecipientScreen(recipientData: recipientUserData!)));
+        _naviagteToNext();
       } else {
         // If user does not exist, show an alert
         showDialog(
@@ -74,6 +70,16 @@ class _TransferPageState extends State<TransferPage> {
       });
     }
     print(recipientUserData);
+  }
+
+  void _naviagteToNext() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            RecipientScreen(recipientData: recipientUserData!),
+      ),
+    );
   }
 
   void _selectBank(String bankName) {

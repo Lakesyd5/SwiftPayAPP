@@ -46,7 +46,7 @@ class _RecipientScreenState extends State<RecipientScreen> {
       Map<String, dynamic>? userData = userSnapshot.data();
 
       if (userData != null) {
-        String _userBalance = userData['Account Balance'];
+        _userBalance = userData['Account Balance'];
 
         String recipientName = '${widget.recipientData['Firstname']} ${widget.recipientData['Lastname']}';
         String senderId = sender_UserId;

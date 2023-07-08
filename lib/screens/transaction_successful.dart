@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swiftpay/pages/home.dart';
+import 'package:swiftpay/screens/dashboard.dart';
 
 class TransactionSuccess extends StatelessWidget {
   const TransactionSuccess(
@@ -12,32 +12,31 @@ class TransactionSuccess extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
           child: Container(
-        padding: EdgeInsets.only(top: 200, right: 40, left: 40),
+        padding: const EdgeInsets.only(top: 200, right: 40, left: 40),
         width: double.infinity,
         child: Column(
           children: [
             Image.asset('assets/images/success.png'),
-            SizedBox(height: 40),
-            Text(
+            const SizedBox(height: 40),
+            const Text(
               'Successfully Transferred',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
             ),
-            SizedBox(height: 10),
-            // Text('You sent $amount to ${receiver.toUpperCase()}'),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-              Text('You'),
-              SizedBox(width: 3),
-              Text('sent'),
-              SizedBox(width: 3),
-              Text('NGN $amount', style: TextStyle(fontWeight: FontWeight.bold),),
-              SizedBox(width: 3),
-              Text('to'),
-              SizedBox(width: 3),
-              Text('${receiver.toUpperCase()}', style: TextStyle(fontWeight: FontWeight.bold))
+              children:  [
+              const Text('You'),
+              const SizedBox(width: 3),
+              const Text('sent'),
+              const SizedBox(width: 3),
+              Text('NGN $amount', style: const TextStyle(fontWeight: FontWeight.bold),),
+              const SizedBox(width: 3),
+              const Text('to'),
+              const SizedBox(width: 3),
+              Text(receiver.toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold))
             ],),
-            SizedBox(height: 80),
+            const SizedBox(height: 80),
 
             // OK Button
             ElevatedButton(
@@ -45,7 +44,7 @@ class TransactionSuccess extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => HomePage(),
+                      builder: (context) => const DashboardScreen(),
                     ));
               },
               style: ElevatedButton.styleFrom(
@@ -53,7 +52,7 @@ class TransactionSuccess extends StatelessWidget {
                       Theme.of(context).colorScheme.primaryContainer,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),
-                  minimumSize: Size(double.infinity, 45)),
+                  minimumSize: const Size(double.infinity, 45)),
               child: Text(
                 'Go Home',
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
