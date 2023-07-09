@@ -19,7 +19,7 @@ class _RecipientScreenState extends State<RecipientScreen> {
   bool isLoading = false;
   var _amount = '';
   var _narration = '';
-  var _userBalance;
+  var showuserBalance;
 
   final sender_UserId = FirebaseAuth.instance.currentUser!.uid;
 
@@ -46,32 +46,59 @@ class _RecipientScreenState extends State<RecipientScreen> {
       Map<String, dynamic>? userData = userSnapshot.data();
 
       if (userData != null) {
-        _userBalance = userData['Account Balance'];
+        String userBal = userData['Account Balance'];
 
-        String recipientName = '${widget.recipientData['Firstname']} ${widget.recipientData['Lastname']}';
+        String recipientName =
+            '${widget.recipientData['Firstname']} ${widget.recipientData['Lastname']}';
         String senderId = sender_UserId;
         String receiverAccountNumber = widget.recipientData['Account Number'];
         String amount = _amount;
         String transactionType = 'Debit';
         String narration = _narration;
         String bank = 'SWIFTPAY';
-        String userBalance = _userBalance;
+        String userBalance = userBal;
 
         // Navigate to the next screen
         Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => RecipientDetailsScreen(
-                  senderId: senderId,
-                  receiverAccountNumber: receiverAccountNumber,
-                  amount: amount,
-                  transactionType: transactionType,
-                  narration: narration,
-                  bank: bank,
-                  userBalance: userBalance,
-                  recipientName: recipientName,
-                  ),
+                senderId: senderId,
+                receiverAccountNumber: receiverAccountNumber,
+                amount: amount,
+                transactionType: transactionType,
+                narration: narration,
+                bank: bank,
+                userBalance: userBalance,
+                recipientName: recipientName,
+              ),
             ));
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserBalance();
+  }
+
+  void getUserBalance() async {
+    DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(sender_UserId)
+            .get();
+
+    if (userSnapshot.exists) {
+      Map<String, dynamic>? userData = userSnapshot.data();
+
+      if (userData != null) {
+        String _userBalance = userData['Account Balance'];
+
+        setState(() {
+          showuserBalance = _userBalance;
+        });
       }
     }
   }
@@ -101,7 +128,7 @@ class _RecipientScreenState extends State<RecipientScreen> {
                 style: Theme.of(context).textTheme.labelMedium,
               ),
               SizedBox(height: 10),
-              Text('Available Balance: $_userBalance'),
+              Text('Available Balance: $showuserBalance'),
               SizedBox(height: 90),
 
               // Form Filed
