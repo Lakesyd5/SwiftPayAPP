@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:swiftpay/screens/savings_ui/verify_savings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,129 +14,138 @@ class SavingForm extends StatefulWidget {
 }
 
 class _SavingFormState extends State<SavingForm> {
-  @override
-  Widget build(BuildContext context) {
-    final _form = GlobalKey<FormState>();
-    bool _isLoading = false;
-    var _savings = '';
-    var _accoutNumber = '';
-    var _transactionPin = '';
+  final _form = GlobalKey<FormState>();
+  bool _isLoading = false;
+  var _savings = '';
+  var _accoutNumber = '';
+  var _transactionPin = '';
 
-    final currentUser = FirebaseAuth.instance.currentUser;
-    final _firestore = FirebaseFirestore.instance;
+  final currentUser = FirebaseAuth.instance.currentUser;
+  final _firestore = FirebaseFirestore.instance;
 
-    void _nextscreen() {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => VerifySaving(
-            saving: _savings,
-            accountNumber: _accoutNumber,
-            pin: _transactionPin,
-          ),
+  void nextScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => VerifySaving(
+          saving: _savings,
+          accountNumber: _accoutNumber,
+          pin: _transactionPin,
         ),
-      );
+      ),
+    );
+  }
+
+  void submit() async {
+    final _isValid = _form.currentState!.validate();
+
+    if (!_isValid) {
+      return;
     }
 
-    void _submit() async {
-      final _isValid = _form.currentState!.validate();
-      if (!_isValid) {
-        return;
-      }
+    _form.currentState!.save();
 
-      _form.currentState!.save();
+    setState(() {
+      _isLoading = true;
+    });
 
-      setState(() {
-        _isLoading = true;
-      });
+    try {
+      if (currentUser != null) {
+        final userId = currentUser!.uid;
 
-      try {
-        if (currentUser != null) {
-          final userId = currentUser.uid;
+        // Get User document from Firestore
+        final snapshot = await _firestore.collection('users').doc(userId).get();
 
-          // Get User document from Firestore
-          final snapshot =
-              await _firestore.collection('users').doc(userId).get();
+        if (snapshot.exists) {
+          final userData = snapshot.data()!;
+          final savedTransactionPin = userData['Pin'];
+          final savedAccountNumber = userData['Account Number'];
 
-          if (snapshot.exists) {
-            final userData = snapshot.data()!;
-            final savedTransactionPin = userData['Pin'];
-
-            if (_transactionPin == savedTransactionPin) {
-              // proceed to next screen
-              _nextscreen();
-            } else {
-              if (Platform.isIOS) {
-                showDialog(
-                  context: context,
-                  builder: (context) => CupertinoAlertDialog(
-                    title: Text('INVALID'),
-                    content: Text('Invalid transaction pin.'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text('OK'),
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text('INVALID'),
-                    content: Text('Invalid transaction pin.'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text('OK'),
-                      ),
-                    ],
-                  ),
-                );
-              }
-            }
+          if (_transactionPin == savedTransactionPin && _accoutNumber == savedAccountNumber) {
+            // proceed to next screen
+            nextScreen();
           } else {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: Text('Error'),
-                content: Text('User data not found.'),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('OK'),
-                  ),
-                ],
-              ),
-            );
+            if (Platform.isIOS) {
+              if(!mounted) return;
+              showDialog(
+                context: context,
+                builder: (context) => CupertinoAlertDialog(
+                  title: Text('INVALID'),
+                  content: Text('Invalid transaction pin Or Account Number'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('OK'),
+                    ),
+                  ],
+                ),
+              );
+            } else {
+              if (!mounted) return;
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text('INVALID'),
+                  content: Text('Invalid transaction pin Or Account Number'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('OK'),
+                    ),
+                  ],
+                ),
+              );
+            }
           }
         } else {
+          if (!mounted) return;
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
               title: Text('Error'),
-              content: Text('User not authenticated.'),
+              content: Text('User data not found.'),
               actions: [
                 TextButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   child: Text('OK'),
                 ),
               ],
             ),
           );
         }
-      } catch (e) {
-        print('Error: $e');
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Error'),
+            content: Text('User not authenticated.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        );
       }
+    } catch (e) {
+      print('Error: $e');
     }
 
+    setState(() {
+      _isLoading = false;
+    });
+  }
+  
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -176,7 +185,9 @@ class _SavingFormState extends State<SavingForm> {
                                 EdgeInsets.symmetric(horizontal: 10),
                             border: OutlineInputBorder(),
                             hintText: 'Enter how much you want to save',
-                            hintStyle: TextStyle(fontSize: 13)),
+                            hintStyle: TextStyle(fontSize: 13),
+                            prefixText: '₦',
+                            ),
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value!.isEmpty || int.tryParse(value) == null) {
@@ -240,12 +251,12 @@ class _SavingFormState extends State<SavingForm> {
                         },
                       ),
                       const SizedBox(height: 40),
-                      if (_isLoading) const CircularProgressIndicator(),
+                      if (_isLoading) CircularProgressIndicator(),
 
                       // Proceed Button
                       if (!_isLoading)
                         ElevatedButton(
-                          onPressed: _submit,
+                          onPressed: submit,
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Theme.of(context)
                                   .colorScheme

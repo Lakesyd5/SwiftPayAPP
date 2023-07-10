@@ -59,6 +59,7 @@ class _RecipientScreenState extends State<RecipientScreen> {
         String userBalance = userBal;
 
         // Navigate to the next screen
+        if(!mounted) return;
         Navigator.push(
             context,
             MaterialPageRoute(
