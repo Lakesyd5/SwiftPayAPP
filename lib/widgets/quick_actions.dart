@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:swiftpay/screens/airtime_ui/select_network.dart';
 import 'package:swiftpay/screens/transfer.dart';
 
 class QuickActionScreen extends StatelessWidget {
@@ -142,44 +143,49 @@ class QuickActionScreen extends StatelessWidget {
             )),
 
         // Airtime Top-Up Tab
-        Container(
-            padding: const EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Theme.of(context).colorScheme.primaryContainer),
-                    child: Icon(
-                      Icons.call,
-                      color: Colors.white,
-                      size: 15,
-                    )),
-                const SizedBox(height: 15),
-                Text(
-                  'Airtime TopUp',
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.primaryContainer,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 15),
-                Container(
-                    width: 175,
-                    child: Text(
-                      'Easily buy airtime and top up with just a few clicks',
-                      style: Theme.of(context).textTheme.labelMedium,
-                    )),
-                SizedBox(height: 15),
-                Icon(Icons.arrow_forward)
-              ],
-            )),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SelectNetworkScreen()));
+          },
+          child: Container(
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).colorScheme.primaryContainer),
+                      child: Icon(
+                        Icons.call,
+                        color: Colors.white,
+                        size: 15,
+                      )),
+                  const SizedBox(height: 15),
+                  Text(
+                    'Airtime TopUp',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 15),
+                  Container(
+                      width: 175,
+                      child: Text(
+                        'Easily buy airtime and top up with just a few clicks',
+                        style: Theme.of(context).textTheme.labelMedium,
+                      )),
+                  SizedBox(height: 15),
+                  Icon(Icons.arrow_forward)
+                ],
+              )),
+        ),
       ],
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:swiftpay/screens/history_ui/history_page.dart';
 
 class CardDisplay extends StatelessWidget {
   const CardDisplay({super.key});
@@ -30,26 +31,31 @@ class CardDisplay extends StatelessWidget {
                             ),
 
                             //--> History Button
-                            Container(
-                              padding:
-                                  EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-                              decoration: BoxDecoration(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primaryContainer,
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Row(
-                                children: const [
-                                  Text(
-                                    'History',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios_rounded,
-                                    size: 13,
-                                    color: Colors.white,
-                                  )
-                                ],
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => History(),));
+                              },
+                              child: Container(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 15, vertical: 7),
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Row(
+                                  children: const [
+                                    Text(
+                                      'History',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      size: 13,
+                                      color: Colors.white,
+                                    )
+                                  ],
+                                ),
                               ),
                             )
                           ]

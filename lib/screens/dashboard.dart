@@ -26,7 +26,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final List<Widget> _pages = [
     const HomePage(),
     const SavingsPage(),
-    const HistoryPage(),
+    const FinancePage(),
     const ManageAccount()
   ];
 

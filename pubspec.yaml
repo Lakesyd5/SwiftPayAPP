@@ -90,6 +90,10 @@ flutter:
     - assets/images/banks/greencheck.png
     - assets/images/success.png
     - assets/images/savings_onboarding.png
+    - assets/images/9mobile.png
+    - assets/images/airtel.png
+    - assets/images/glo.png
+    - assets/images/mtn.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
