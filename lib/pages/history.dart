@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class HistoryPage extends StatelessWidget {
-  const HistoryPage({super.key});
+class FinancePage extends StatelessWidget {
+  const FinancePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('History'),
+        child: Text('Finances'),
       )
     );
   }

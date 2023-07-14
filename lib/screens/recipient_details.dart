@@ -149,7 +149,7 @@ class _RecipientDetailsScreenState extends State<RecipientDetailsScreen> {
       'amount': amount,
       'transactionType': transactionType,
       'narration': narration,
-      'timeStamp': DateTime.now()
+      'time': DateTime.now()
     }).then((value) {
       print('Transaction Saved to history');
     }).catchError((error) => print('Failed to save transaction: ${error}'));

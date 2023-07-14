@@ -154,11 +154,11 @@ class _TopupVerifyState extends State<TopupVerify> {
     // Save Transaction to history
     FirebaseFirestore.instance.collection('history').add({
       'amount': widget.amount,
-      'narration': '${widget.airtime} airtime',
+      'narration': 'Airtime',
       'receiver': widget.phone,
+      'network': widget.airtime,
       'userId': currentUser,
-      'timeStamp': DateTime.now(),
-      'transactionType': 'Debit'
+      'time': DateTime.now(),
     });
   }
 
@@ -204,6 +204,8 @@ class _TopupVerifyState extends State<TopupVerify> {
                           hintStyle: TextStyle(fontSize: 13),
                           contentPadding: EdgeInsets.symmetric(horizontal: 10)),
                       keyboardType: TextInputType.number,
+                      obscureText: true,
+                      obscuringCharacter: '*',
                       validator: (value) {
                         if (value!.isEmpty ||
                             int.tryParse(value) == null ||

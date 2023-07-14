@@ -129,8 +129,7 @@ class _VerifySavingState extends State<VerifySaving> {
       'amount': widget.saving,
       'narration': 'Savings',
       'userId': currentUser,
-      'timeStamp': DateTime.now(),
-      'transactionType': 'Debit'
+      'time': DateTime.now(),
     });
   }
 
