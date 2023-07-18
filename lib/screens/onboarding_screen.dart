@@ -24,7 +24,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             controller: _controller,
             children: [
               IntroScreenOne(controller: _controller),
-              IntroScreenTWo(),
+              const IntroScreenTWo(),
             ],
           ),
 

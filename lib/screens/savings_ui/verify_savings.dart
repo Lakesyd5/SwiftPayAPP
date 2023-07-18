@@ -26,7 +26,7 @@ class VerifySaving extends StatefulWidget {
 class _VerifySavingState extends State<VerifySaving> {
   final currentUser = FirebaseAuth.instance.currentUser!.uid;
   var userBalance;
-  bool _isSaving = false;
+  final bool _isSaving = false;
 
   @override
   void initState() {
@@ -45,10 +45,10 @@ class _VerifySavingState extends State<VerifySaving> {
       Map<String, dynamic>? userData = userSnapshot.data();
 
       if (userData != null) {
-        String _userBalance = userData['Account Balance'];
+        String userBalance = userData['Account Balance'];
 
         setState(() {
-          userBalance = _userBalance;
+          userBalance = userBalance;
         });
       }
     }

@@ -28,24 +28,24 @@ class SavingOnboarding extends StatelessWidget {
                           color: Colors.white,
                         ),
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   Text(
                     'Save any amount and get an interest of 5% within 6 months.',
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: Colors.white,
                         ),
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                      minimumSize: Size(double.infinity, 45),
+                      minimumSize: const Size(double.infinity, 45),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8)
                       )
                     ),
                     onPressed: () {
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SavingForm(),));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SavingForm(),));
                     },
                     child: Text('Proceed', style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),),
                   ),

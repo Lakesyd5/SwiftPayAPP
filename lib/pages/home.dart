@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
                               // Display a loading indicator while fetching data
-                              return Center(
+                              return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             } else if (snapshot.hasError) {
@@ -56,17 +56,17 @@ class HomePage extends StatelessWidget {
                                         : null,
                                     child: imageURL.isNotEmpty
                                         ? null
-                                        : Icon(Icons.person),
+                                        : const Icon(Icons.person),
                                   ),
                                   const SizedBox(width: 6),
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text('Hello, $firstName', style: TextStyle(fontWeight: FontWeight.w500),),
+                                      Text('Hello, $firstName', style: const TextStyle(fontWeight: FontWeight.w500),),
                                       // SizedBox(height: 4),
                                       Text('$firstName $lastName',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.bold)),
                                     ],
                                   ),
@@ -88,10 +88,10 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 20),
 
                 //--> Card
-                CardDisplay(),
+                const CardDisplay(),
                 const SizedBox(height: 30),
 
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     'Quick Actions',
@@ -102,10 +102,10 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 20),
 
                 // --> Quick Actions
-                QuickActionScreen(),
+                const QuickActionScreen(),
                 const SizedBox(height: 30),
 
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     'Other Actions',
@@ -116,7 +116,7 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 20),
 
                 // -->Other ACtions
-                OtherActions(),
+                const OtherActions(),
               ],
             ),
           ),

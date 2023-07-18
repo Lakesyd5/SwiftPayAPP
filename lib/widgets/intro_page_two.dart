@@ -38,7 +38,7 @@ class IntroScreenTWo extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (ctx) => AuthScreen(),
+                        builder: (ctx) => const AuthScreen(),
                       ),
                     );
                   },

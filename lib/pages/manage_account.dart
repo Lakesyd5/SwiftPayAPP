@@ -70,7 +70,7 @@ class _ManageAccountState extends State<ManageAccount> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 // Display a loading indicator while fetching data
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (snapshot.hasError) {
@@ -94,7 +94,7 @@ class _ManageAccountState extends State<ManageAccount> {
                     // First Section
                     Container(
                       width: double.infinity,
-                      padding: EdgeInsets.all(13),
+                      padding: const EdgeInsets.all(13),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10)),
@@ -103,24 +103,24 @@ class _ManageAccountState extends State<ManageAccount> {
                           // User image Preview and add button
                           CircleAvatar(
                             radius: 40,
-                            backgroundColor: Color.fromARGB(255, 196, 195, 195),
+                            backgroundColor: const Color.fromARGB(255, 196, 195, 195),
                             // foregroundImage: _pickedImageFile != null ? FileImage(_pickedImageFile!) : null,
                             backgroundImage: imageURL.isNotEmpty ? NetworkImage(imageURL) : null,
-                            child: imageURL.isNotEmpty ? null : Icon(Icons.person, size: 40, color: Colors.white54,),
+                            child: imageURL.isNotEmpty ? null : const Icon(Icons.person, size: 40, color: Colors.white54,),
                           ),
                           TextButton.icon(
                               onPressed: _pickImage,
-                              icon: Icon(Icons.image),
+                              icon: const Icon(Icons.image),
                               label: Text('Add Image', style: TextStyle(color: Theme.of(context).colorScheme.primary),)),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Text(
                             'Hello, $firstName',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w600),
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Text('$firstName $lastName'),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -132,10 +132,10 @@ class _ManageAccountState extends State<ManageAccount> {
                                     style:
                                         Theme.of(context).textTheme.labelMedium,
                                   ),
-                                  SizedBox(height: 6),
+                                  const SizedBox(height: 6),
                                   Text(
                                     accNumber,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500),
                                   )
@@ -151,10 +151,10 @@ class _ManageAccountState extends State<ManageAccount> {
                                     style:
                                         Theme.of(context).textTheme.labelMedium,
                                   ),
-                                  SizedBox(height: 6),
+                                  const SizedBox(height: 6),
                                   Text(
                                     pin,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500),
                                   ),
@@ -165,12 +165,12 @@ class _ManageAccountState extends State<ManageAccount> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
                     // Second Container
                     Container(
                       width: double.infinity,
-                      padding: EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10)),
@@ -190,7 +190,7 @@ class _ManageAccountState extends State<ManageAccount> {
                               )
                             ],
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -200,12 +200,12 @@ class _ManageAccountState extends State<ManageAccount> {
                               ),
                               Text(
                                 '$firstName $lastName',
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.w500),
                               )
                             ],
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -215,12 +215,12 @@ class _ManageAccountState extends State<ManageAccount> {
                               ),
                               Text(
                                 email,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.w500),
                               )
                             ],
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -230,7 +230,7 @@ class _ManageAccountState extends State<ManageAccount> {
                               ),
                               Text(
                                 phoneNumber,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.w500),
                               )
                             ],
@@ -238,12 +238,12 @@ class _ManageAccountState extends State<ManageAccount> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
                     // Third Container
                     Container(
                       width: double.infinity,
-                      padding: EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10)),
@@ -255,13 +255,13 @@ class _ManageAccountState extends State<ManageAccount> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Generate SwiftPay Card',
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                   Text(
                                     'Get your personalized swiftpay card',
                                     style:
@@ -269,25 +269,25 @@ class _ManageAccountState extends State<ManageAccount> {
                                   ),
                                 ],
                               ),
-                              Icon(Icons.arrow_forward_ios_rounded)
+                              const Icon(Icons.arrow_forward_ios_rounded)
                             ],
                           )
                         ],
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
                     // Last Container
                     GestureDetector(
                       onTap: () {
                         FirebaseAuth.instance.signOut();
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => AuthScreen(),
+                          builder: (context) => const AuthScreen(),
                         ));
                       },
                       child: Container(
                         width: double.infinity,
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10)),
@@ -299,11 +299,11 @@ class _ManageAccountState extends State<ManageAccount> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Log Out',
+                                    const Text('Log Out',
                                         style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold)),
-                                    SizedBox(height: 5),
+                                    const SizedBox(height: 5),
                                     Text('Log out of this account',
                                         style: Theme.of(context)
                                             .textTheme

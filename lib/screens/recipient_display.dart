@@ -24,9 +24,9 @@ class _RecipientScreenState extends State<RecipientScreen> {
   final sender_UserId = FirebaseAuth.instance.currentUser!.uid;
 
   void _submit() async {
-    final _isValid = _form.currentState!.validate();
+    final isValid = _form.currentState!.validate();
 
-    if (!_isValid) {
+    if (!isValid) {
       return;
     }
 
@@ -95,10 +95,10 @@ class _RecipientScreenState extends State<RecipientScreen> {
       Map<String, dynamic>? userData = userSnapshot.data();
 
       if (userData != null) {
-        String _userBalance = userData['Account Balance'];
+        String userBalance = userData['Account Balance'];
 
         setState(() {
-          showuserBalance = _userBalance;
+          showuserBalance = userBalance;
         });
       }
     }

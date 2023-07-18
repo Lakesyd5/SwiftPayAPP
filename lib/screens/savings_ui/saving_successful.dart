@@ -15,7 +15,7 @@ class SavingSuccessful extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('assets/images/success.png'),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             const Text(
               'Successfully Deposited',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
@@ -24,28 +24,28 @@ class SavingSuccessful extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('You'),
-                SizedBox(width: 3),
-                Text('saved'),
-                SizedBox(width: 3),
-                Text('NGN', style: TextStyle(fontWeight: FontWeight.bold),),
-                SizedBox(width: 3),
-                Text(amount, style: TextStyle(fontWeight: FontWeight.bold),),
+                const Text('You'),
+                const SizedBox(width: 3),
+                const Text('saved'),
+                const SizedBox(width: 3),
+                const Text('NGN', style: TextStyle(fontWeight: FontWeight.bold),),
+                const SizedBox(width: 3),
+                Text(amount, style: const TextStyle(fontWeight: FontWeight.bold),),
               ],
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
       
             // Go home button
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                minimumSize: Size(double.infinity, 45)
+                minimumSize: const Size(double.infinity, 45)
               ),
               onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashboardScreen(),));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const DashboardScreen(),));
               },
-              child: Text('Go Home', style: TextStyle(color: Colors.white),),
+              child: const Text('Go Home', style: TextStyle(color: Colors.white),),
             ),
           ],
         ),

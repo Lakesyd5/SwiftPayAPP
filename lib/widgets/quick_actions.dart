@@ -48,7 +48,7 @@ class QuickActionScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 15),
-                Container(
+                SizedBox(
                     width: 175,
                     child: Text(
                       'Send any amount starting from NGN 10 to any bank account.',
@@ -90,7 +90,7 @@ class QuickActionScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 15),
-              Container(
+              SizedBox(
                   width: 175,
                   child: Text(
                     'It\'s easy, request for money from other Swiftpay Users',
@@ -131,7 +131,7 @@ class QuickActionScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 15),
-                Container(
+                SizedBox(
                     width: 175,
                     child: Text(
                       'Fund your SwiftPay account from other bank accounts.',
@@ -175,7 +175,7 @@ class QuickActionScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 15),
-                  Container(
+                  SizedBox(
                       width: 175,
                       child: Text(
                         'Easily buy airtime and top up with just a few clicks',

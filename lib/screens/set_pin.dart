@@ -18,9 +18,9 @@ class _SetPinScreenState extends State<SetPinScreen> {
   var _userPin = '';
 
   void _submit () {
-    final _isValid = _formKey.currentState!.validate();
+    final isValid = _formKey.currentState!.validate();
 
-    if (!_isValid) {
+    if (!isValid) {
       return;
     }
 

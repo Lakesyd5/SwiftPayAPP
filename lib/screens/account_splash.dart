@@ -76,7 +76,7 @@ class _AccountGenerateScreenState extends State<AccountGenerateScreen> {
             const SizedBox(height: 70),
             Image.asset('assets/images/swiftpay.png', width: 115),
             const SizedBox(height: 215),
-            Container(
+            SizedBox(
               width: 170,
               height: 170,
               child: CircularProgressIndicator(color: Theme.of(context).colorScheme.primaryContainer, strokeWidth: 6),

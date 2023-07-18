@@ -15,7 +15,7 @@ class CardDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
                 // color: Colors.black,
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     color: Colors.black),
@@ -25,7 +25,7 @@ class CardDisplay extends StatelessWidget {
                     Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               'Your Balance',
                               style: TextStyle(color: Colors.white),
                             ),
@@ -33,18 +33,18 @@ class CardDisplay extends StatelessWidget {
                             //--> History Button
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => History(),));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const History(),));
                               },
                               child: Container(
                                 padding:
-                                    EdgeInsets.symmetric(horizontal: 15, vertical: 7),
+                                    const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
                                 decoration: BoxDecoration(
                                     color: Theme.of(context)
                                         .colorScheme
                                         .primaryContainer,
                                     borderRadius: BorderRadius.circular(20)),
-                                child: Row(
-                                  children: const [
+                                child: const Row(
+                                  children: [
                                     Text(
                                       'History',
                                       style: TextStyle(color: Colors.white),
@@ -67,7 +67,7 @@ class CardDisplay extends StatelessWidget {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           // While fetching data display a circular indicator
-                          return CircularProgressIndicator();
+                          return const CircularProgressIndicator();
                         } else if(snapshot.hasError) {
                           // If there is an error 
                           return Text('Error: ${snapshot.hasError}'); 
@@ -75,7 +75,7 @@ class CardDisplay extends StatelessWidget {
                           final userData = snapshot.data!.data();
                           final balance = userData?['Account Balance']?? '';
                         
-                        return Text('NGN $balance.00', style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),);
+                        return Text('NGN $balance.00', style: const TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),);
                         }else {
                           return Container();
                         }

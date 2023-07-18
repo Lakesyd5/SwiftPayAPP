@@ -1,5 +1,3 @@
-// import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:swiftpay/pages/history.dart';
@@ -45,7 +43,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Colors.black,
           selectedIconTheme: IconThemeData(color: Theme.of(context).colorScheme.primaryContainer),
-          unselectedItemColor: Color.fromARGB(193, 158, 158, 158),
+          unselectedItemColor: const Color.fromARGB(193, 158, 158, 158),
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.savings), label: 'Savings'),

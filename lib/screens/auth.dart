@@ -28,9 +28,9 @@ class _AuthScreenState extends State<AuthScreen> {
   var _isAuthenticating = false;
 
   void _submit() async {
-    final _isValid = _form.currentState!.validate();
+    final isValid = _form.currentState!.validate();
 
-    if (!_isValid) {
+    if (!isValid) {
       return;
     }
 
@@ -227,7 +227,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
 
                     // Phone Number Area
-                    if (_isLogin) SizedBox(height: 20),
+                    if (_isLogin) const SizedBox(height: 20),
                     if (_isLogin)
                       SizedBox(
                         width: double.infinity,

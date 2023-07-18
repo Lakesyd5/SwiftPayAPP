@@ -48,12 +48,12 @@ class _TopupVerifyState extends State<TopupVerify> {
       Map<String, dynamic>? userData = userSnapshot.data();
 
       if (userData != null) {
-        String _userBalance = userData['Account Balance'];
-        String _userPin = userData['Pin'];
+        String userBalance = userData['Account Balance'];
+        String userPin = userData['Pin'];
 
         setState(() {
-          userBalance = _userBalance;
-          userPin = _userPin;
+          userBalance = userBalance;
+          userPin = userPin;
         });
       }
     }

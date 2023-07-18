@@ -94,29 +94,29 @@ class _RecipientDetailsScreenState extends State<RecipientDetailsScreen> {
         showDialog(
             context: context,
             builder: (context) => CupertinoAlertDialog(
-                  title: Text('Insufficient Funds'),
-                  content: Text('Top up your account'),
+                  title: const Text('Insufficient Funds'),
+                  content: const Text('Top up your account'),
                   actions: [
                     TextButton(
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text('Top Up'))
+                        child: const Text('Top Up'))
                   ],
                 ));
       } else {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Insufficient Balance'),
-            content: Text(
+            title: const Text('Insufficient Balance'),
+            content: const Text(
                 'You do not have suffient balance, Please top your account.'),
             actions: [
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('Ok'))
+                  child: const Text('Ok'))
             ],
           ),
         );
@@ -152,7 +152,7 @@ class _RecipientDetailsScreenState extends State<RecipientDetailsScreen> {
       'time': DateTime.now()
     }).then((value) {
       print('Transaction Saved to history');
-    }).catchError((error) => print('Failed to save transaction: ${error}'));
+    }).catchError((error) => print('Failed to save transaction: $error'));
   }
 
   @override
@@ -160,15 +160,15 @@ class _RecipientDetailsScreenState extends State<RecipientDetailsScreen> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
             children: [
-              SizedBox(height: 100),
+              const SizedBox(height: 100),
               Text(
                 'Transaction Details',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
 
               // Account Number Display
               Row(
@@ -177,18 +177,18 @@ class _RecipientDetailsScreenState extends State<RecipientDetailsScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Account Number'),
-                      SizedBox(height: 5),
+                      const Text('Account Number'),
+                      const SizedBox(height: 5),
                       Text(
                         widget.receiverAccountNumber,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
                   Image.asset('assets/images/banks/greencheck.png'),
                 ],
               ),
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
 
               // Recipients Name Display
               Row(
@@ -197,18 +197,18 @@ class _RecipientDetailsScreenState extends State<RecipientDetailsScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Recipient\'s Name'),
-                      SizedBox(height: 5),
+                      const Text('Recipient\'s Name'),
+                      const SizedBox(height: 5),
                       Text(
                         widget.recipientName.toUpperCase(),
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
                   Image.asset('assets/images/banks/greencheck.png'),
                 ],
               ),
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
 
               // Recipients Bank Display
               Row(
@@ -217,18 +217,18 @@ class _RecipientDetailsScreenState extends State<RecipientDetailsScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Recipient\'s Bank'),
-                      SizedBox(height: 5),
+                      const Text('Recipient\'s Bank'),
+                      const SizedBox(height: 5),
                       Text(
                         widget.bank,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
                   Image.asset('assets/images/banks/greencheck.png'),
                 ],
               ),
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
 
               // Transaction Narration Display
               Row(
@@ -237,18 +237,18 @@ class _RecipientDetailsScreenState extends State<RecipientDetailsScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Transaction Narration'),
-                      SizedBox(height: 5),
+                      const Text('Transaction Narration'),
+                      const SizedBox(height: 5),
                       Text(
                         widget.narration,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
                   Image.asset('assets/images/banks/greencheck.png'),
                 ],
               ),
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
 
               // Amount To Be Sent
               Row(
@@ -257,18 +257,18 @@ class _RecipientDetailsScreenState extends State<RecipientDetailsScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Amount to be sent'),
-                      SizedBox(height: 5),
+                      const Text('Amount to be sent'),
+                      const SizedBox(height: 5),
                       Text(
                         'NGN ${widget.amount}',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
                   Image.asset('assets/images/banks/greencheck.png'),
                 ],
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
 
               // Available Balance Display
               Text(
@@ -278,8 +278,8 @@ class _RecipientDetailsScreenState extends State<RecipientDetailsScreen> {
                     .labelLarge!
                     .copyWith(color: Colors.black45),
               ),
-              SizedBox(height: 25),
-              if (_isLoading) CircularProgressIndicator(),
+              const SizedBox(height: 25),
+              if (_isLoading) const CircularProgressIndicator(),
 
               // Pay Button
               if (!_isLoading)
@@ -287,7 +287,7 @@ class _RecipientDetailsScreenState extends State<RecipientDetailsScreen> {
                   onPressed: _pay,
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.onPrimary,
-                      minimumSize: Size(double.infinity, 45),
+                      minimumSize: const Size(double.infinity, 45),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8))),
                   child: Text(

@@ -20,9 +20,9 @@ class _TransferPageState extends State<TransferPage> {
   Map<String, dynamic>? recipientUserData;
 
   void _submit() async {
-    final _isValid = _form.currentState!.validate();
+    final isValid = _form.currentState!.validate();
 
-    if (!_isValid) {
+    if (!isValid) {
       return;
     }
 
@@ -50,14 +50,14 @@ class _TransferPageState extends State<TransferPage> {
         showDialog(
           context: context,
           builder: (context) => CupertinoAlertDialog(
-            title: Text('Opps!!!'),
-            content: Text('The Recipient was not found'),
+            title: const Text('Opps!!!'),
+            content: const Text('The Recipient was not found'),
             actions: [
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('OK'))
+                  child: const Text('OK'))
             ],
           ),
         );
@@ -155,7 +155,7 @@ class _TransferPageState extends State<TransferPage> {
                       minimumSize: const Size(double.infinity, 45.0)),
                 ),
                 const SizedBox(height: 35),
-                if (isLoading) CircularProgressIndicator(),
+                if (isLoading) const CircularProgressIndicator(),
 
                 // Proceed to pay button
                 if (!isLoading)
@@ -166,7 +166,7 @@ class _TransferPageState extends State<TransferPage> {
                             Theme.of(context).colorScheme.primaryContainer,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8)),
-                        minimumSize: Size(double.infinity, 40)),
+                        minimumSize: const Size(double.infinity, 40)),
                     child: Text(
                       'Proceed to pay',
                       style: TextStyle(

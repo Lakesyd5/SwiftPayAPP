@@ -37,9 +37,9 @@ class _SavingFormState extends State<SavingForm> {
   }
 
   void submit() async {
-    final _isValid = _form.currentState!.validate();
+    final isValid = _form.currentState!.validate();
 
-    if (!_isValid) {
+    if (!isValid) {
       return;
     }
 
@@ -70,14 +70,14 @@ class _SavingFormState extends State<SavingForm> {
               showDialog(
                 context: context,
                 builder: (context) => CupertinoAlertDialog(
-                  title: Text('INVALID'),
-                  content: Text('Invalid transaction pin Or Account Number'),
+                  title: const Text('INVALID'),
+                  content: const Text('Invalid transaction pin Or Account Number'),
                   actions: [
                     TextButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('OK'),
+                      child: const Text('OK'),
                     ),
                   ],
                 ),
@@ -87,14 +87,14 @@ class _SavingFormState extends State<SavingForm> {
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text('INVALID'),
-                  content: Text('Invalid transaction pin Or Account Number'),
+                  title: const Text('INVALID'),
+                  content: const Text('Invalid transaction pin Or Account Number'),
                   actions: [
                     TextButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('OK'),
+                      child: const Text('OK'),
                     ),
                   ],
                 ),
@@ -106,14 +106,14 @@ class _SavingFormState extends State<SavingForm> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text('Error'),
-              content: Text('User data not found.'),
+              title: const Text('Error'),
+              content: const Text('User data not found.'),
               actions: [
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             ),
@@ -123,12 +123,12 @@ class _SavingFormState extends State<SavingForm> {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Error'),
-            content: Text('User not authenticated.'),
+            title: const Text('Error'),
+            content: const Text('User not authenticated.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           ),
@@ -251,7 +251,7 @@ class _SavingFormState extends State<SavingForm> {
                         },
                       ),
                       const SizedBox(height: 40),
-                      if (_isLoading) CircularProgressIndicator(),
+                      if (_isLoading) const CircularProgressIndicator(),
 
                       // Proceed Button
                       if (!_isLoading)
