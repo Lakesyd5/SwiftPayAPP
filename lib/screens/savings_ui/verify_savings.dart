@@ -25,8 +25,8 @@ class VerifySaving extends StatefulWidget {
 
 class _VerifySavingState extends State<VerifySaving> {
   final currentUser = FirebaseAuth.instance.currentUser!.uid;
-  var userBalance;
-  final bool _isSaving = false;
+  var _userBalance;
+  bool _isSaving = false;
 
   @override
   void initState() {
@@ -48,14 +48,14 @@ class _VerifySavingState extends State<VerifySaving> {
         String userBalance = userData['Account Balance'];
 
         setState(() {
-          userBalance = userBalance;
+          _userBalance = userBalance;
         });
       }
     }
   }
 
   void yes() async {
-    int savedUserBalance = int.parse(userBalance);
+    int savedUserBalance = int.parse(_userBalance);
     int savingsAmount = int.parse(widget.saving);
 
     // Subtract the savings from the user balance
@@ -63,6 +63,9 @@ class _VerifySavingState extends State<VerifySaving> {
 
     if (savedUserBalance > savingsAmount) {
       try {
+        setState(() {
+          _isSaving = true;
+        });
         await FirebaseFirestore.instance
             .collection('users')
             .doc(currentUser)
@@ -162,6 +165,8 @@ class _VerifySavingState extends State<VerifySaving> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if(_isSaving) const CircularProgressIndicator(),
+
+                // YES or NO Button
                 if(!_isSaving)
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(

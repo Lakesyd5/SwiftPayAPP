@@ -26,8 +26,8 @@ class TopupVerify extends StatefulWidget {
 class _TopupVerifyState extends State<TopupVerify> {
   final currentUser = FirebaseAuth.instance.currentUser!.uid;
   final formKey = GlobalKey<FormState>();
-  var userBalance;
-  var userPin;
+  var _userBalance;
+  var _userPin;
   bool isProcessing = false;
   String savedPin = '';
 
@@ -52,8 +52,8 @@ class _TopupVerifyState extends State<TopupVerify> {
         String userPin = userData['Pin'];
 
         setState(() {
-          userBalance = userBalance;
-          userPin = userPin;
+          _userBalance = userBalance;
+          _userPin = userPin;
         });
       }
     }
@@ -66,8 +66,8 @@ class _TopupVerifyState extends State<TopupVerify> {
     }
 
     formKey.currentState!.save();
-    int userTransactionalPin = int.parse(userPin);
-    int savedUserBalance = int.parse(userBalance);
+    int userTransactionalPin = int.parse(_userPin);
+    int savedUserBalance = int.parse(_userBalance);
     int airtimePrice = int.parse(widget.amount);
     int savedPinInt = int.parse(savedPin);
 
@@ -76,6 +76,9 @@ class _TopupVerifyState extends State<TopupVerify> {
     if (savedUserBalance > airtimePrice) {
       if (savedPinInt == userTransactionalPin) {
         try {
+          setState(() {
+            isProcessing = true;
+          });
           await FirebaseFirestore.instance
               .collection('users')
               .doc(currentUser)

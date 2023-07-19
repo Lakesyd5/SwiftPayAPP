@@ -23,6 +23,7 @@ class _ModalScreenState extends State<ModalScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       padding: EdgeInsets.all(20),
       color: Colors.white,
       child:  Column(
